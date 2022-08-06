@@ -52,5 +52,5 @@ class Window:
 
 
  
-e=Window(root)
+window=Window(root)
 root.mainloop()

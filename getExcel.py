@@ -77,11 +77,7 @@ def Encompass(file):
     originalLatitude=Testfile['Latitude']
     originalLongitude=Testfile['Longitude']
     originalComments=Testfile['Comments']
-
-
-
-
-
+    
     #Create a dict of feature id's, to later add components (like a hash)
     for i in Testfile['Feature\nID']:
  # Add the feature as level 1 dict       
@@ -104,9 +100,7 @@ def Encompass(file):
         newFeaturesList[originalFeature[i]]['Longitude']=originalLongitude[i]
         newFeaturesList[originalFeature[i]]['Comments']=originalComments[i]
 
-    print('------------------------------')
-    print(originalFeature[19270])
-    print(newFeaturesList[originalFeature[19270]])
+ 
     
 
         

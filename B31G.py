@@ -91,46 +91,44 @@ class MainWindow:
         self.client_label_input=StringVar()
         self.client_label_input=ttk.Entry(self.frame_left_upper,textvariable=self.client_label_input)
         self.client_label_input.grid(column=1,row=1)
-
         self.license_label_input=StringVar()
         self.license_label_input=ttk.Entry(self.frame_left_upper,textvariable=self.client_label_input)
         self.license_label_input.grid(column=1,row=2)
-
-
-        self.inspectiondate_label_input=ttk.Entry(self.frame_left_upper)
+        self.inspectiondate_label_input=StringVar()
+        self.inspectiondate_label_input=ttk.Entry(self.frame_left_upper,textvariable=self.inspectiondate_label_input)
         self.inspectiondate_label_input.grid(column=1,row=3)
-
-        self.nominalOD_label_input=ttk.Entry( self.frame_left_lower)
+        self.nominalOD_label_input=StringVar()
+        self.nominalOD_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.nominalOD_label_input)
         self.nominalOD_label_input.grid(column=1,row=5)
-
-        self.nominalWT_label_input=ttk.Entry( self.frame_left_lower)
+        self.nominalWT_label_input=StringVar()
+        self.nominalWT_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.nominalWT_label_input)
         self.nominalWT_label_input.grid(column=1,row=6)
-
-        self.corrosionAllowance_label_input=ttk.Entry( self.frame_left_lower)
+        self.corrosionAllowance_label_input=StringVar()
+        self.corrosionAllowance_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.corrosionAllowance_label_input)
         self.corrosionAllowance_label_input.grid(column=1,row=7)
-
-        self.SMYS_label_input=ttk.Entry( self.frame_left_lower)
+        self.SMYS_label_input=StringVar()
+        self.SMYS_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.SMYS_label_input)
         self.SMYS_label_input.grid(column=1,row=8)
-
-        self.designFactor_label_input=ttk.Entry( self.frame_left_lower)
+        self.designFactor_label_input=StringVar()
+        self.designFactor_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.designFactor_label_input)
         self.designFactor_label_input.grid(column=1,row=9)
-
-        self.locationFactor_label_input=ttk.Entry( self.frame_left_lower)
+        self.locationFactor_label_input=StringVar()
+        self.locationFactor_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.locationFactor_label_input)
         self.locationFactor_label_input.grid(column=1,row=10)
-
-        self.jointFactor_label_input=ttk.Entry( self.frame_left_lower)
+        self.jointFactor_label_input=StringVar()
+        self.jointFactor_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.jointFactor_label_input)
         self.jointFactor_label_input.grid(column=1,row=11)
-
-        self.temperatureFactor_label_input=ttk.Entry( self.frame_left_lower)
+        self.temperatureFactor_label_input=StringVar()
+        self.temperatureFactor_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.temperatureFactor_label_input)
         self.temperatureFactor_label_input.grid(column=1,row=12)
-
-        self.licensePressure_label_input=ttk.Entry( self.frame_left_lower)
+        self.licensePressure_label_input=StringVar()
+        self.licensePressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.licensePressure_label_input)
         self.licensePressure_label_input.grid(column=1,row=13)
-
-        self.operatingPressure_label_input=ttk.Entry( self.frame_left_lower)
+        self.operatingPressure_label_input=StringVar()
+        self.operatingPressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.operatingPressure_label_input)
         self.operatingPressure_label_input.grid(column=1,row=14)
-
-        self.maximumPressure_label_input=ttk.Entry( self.frame_left_lower)
+        self.maximumPressure_label_input=StringVar()
+        self.maximumPressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.maximumPressure_label_input)
         self.maximumPressure_label_input.grid(column=1,row=15)
           
         # Column 3 PL 100 Data (Labels)
@@ -160,27 +158,38 @@ class MainWindow:
         self.age_label.grid(column=3,row=15,sticky='e')
 
         # Column 4 User Input for PL 100 Data 
-        self.substance_label_input=ttk.Entry(self.frame_middle)
+        self.substance_label_input=StringVar()
+        self.substance_label_input=ttk.Entry(self.frame_middle,textvariable=self.substance_label_input)
         self.substance_label_input.grid(column=4,row=5)
-        self.to_label_input=ttk.Entry(self.frame_middle)
+        self.to_label_input=StringVar()
+        self.to_label_input=ttk.Entry(self.frame_middle,textvariable=self.to_label_input)
         self.to_label_input.grid(column=4,row=6)
-        self.from_label_input=ttk.Entry(self.frame_middle)
+        self.from_label_input=StringVar()
+        self.from_label_input=ttk.Entry(self.frame_middle,textvariable=self.from_label_input)
         self.from_label_input.grid(column=4,row=7)
-        self.length_label_input=ttk.Entry(self.frame_middle)
+        self.length_label_input=StringVar()
+        self.length_label_input=ttk.Entry(self.frame_middle,textvariable=self.length_label_input)
         self.length_label_input.grid(column=4,row=8)
-        self.material_label_input=ttk.Entry(self.frame_middle)
+        self.material_label_input=StringVar()
+        self.material_label_input=ttk.Entry(self.frame_middle,textvariable=self.material_label_input)
         self.material_label_input.grid(column=4,row=9)
-        self.materialType_label_input=ttk.Entry(self.frame_middle)
+        self.materialType_label_input=StringVar()
+        self.materialType_label_input=ttk.Entry(self.frame_middle,textvariable=self.materialType_label_input)
         self.materialType_label_input.grid(column=4,row=10)
-        self.grade_label_input=ttk.Entry(self.frame_middle)
+        self.grade_label_input=StringVar()
+        self.grade_label_input=ttk.Entry(self.frame_middle,textvariable=self.grade_label_input)
         self.grade_label_input.grid(column=4,row=11)
-        self.stress_label_input=ttk.Entry(self.frame_middle)
+        self.stress_label_input=StringVar()
+        self.stress_label_input=ttk.Entry(self.frame_middle,textvariable=self.stress_label_input)
         self.stress_label_input.grid(column=4,row=12)
-        self.MOP_label_input=ttk.Entry(self.frame_middle)
+        self.MOP_label_input=StringVar()
+        self.MOP_label_input=ttk.Entry(self.frame_middle,textvariable=self.MOP_label_input)
         self.MOP_label_input.grid(column=4,row=13)
-        self.h2s_label_input=ttk.Entry(self.frame_middle)
+        self.h2s_label_input=StringVar()
+        self.h2s_label_input=ttk.Entry(self.frame_middle,textvariable=self.h2s_label_input)
         self.h2s_label_input.grid(column=4,row=14)
-        self.age_label_input=ttk.Entry(self.frame_middle)
+        self.age_label_input=StringVar()
+        self.age_label_input=ttk.Entry(self.frame_middle,textvariable=self.age_label_input)
         self.age_label_input.grid(column=4,row=15)
           
         # Column 5 Env Factors (Labels)
@@ -204,21 +213,29 @@ class MainWindow:
         self.seamType_label.grid(column=5,row=12,sticky='e')
         
         # Column 6 User Input for Env Factors
-        self.casedCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white")
+        self.casedCrossing_label_input=StringVar()
+        self.casedCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.casedCrossing_label_input)
         self.casedCrossing_label_input.grid(column=6,row=5)
-        self.roadCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white")
+        self.roadCrossing_label_input=StringVar()
+        self.roadCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.roadCrossing_label_input)
         self.roadCrossing_label_input.grid(column=6,row=6)
-        self.railwayCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white")
+        self.railwayCrossing_label_input=StringVar()
+        self.railwayCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.railwayCrossing_label_input)
         self.railwayCrossing_label_input.grid(column=6,row=7)
-        self.stationCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white")
+        self.stationCrossing_label_input=StringVar()
+        self.stationCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.stationCrossing_label_input)
         self.stationCrossing_label_input.grid(column=6,row=8)
-        self.otherCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white")
+        self.otherCrossing_label_input=StringVar()
+        self.otherCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.otherCrossing_label_input)
         self.otherCrossing_label_input.grid(column=6,row=9)
-        self.substanceClass_label_input=ttk.Combobox(self.frame_right,value=["Gas","Multiphase"],background="white")
+        self.substanceClass_label_input=StringVar()
+        self.substanceClass_label_input=ttk.Combobox(self.frame_right,value=["Gas","Multiphase"],background="white",textvariable=self.substanceClass_label_input)
         self.substanceClass_label_input.grid(column=6,row=10)
-        self.pipelineClass_label_input=ttk.Combobox(self.frame_right,background="white",value=["None","10 or fewer dwelling units","11 to 46 dwellings","46 or more dwelling units","prevelance of buildings intended for oiccupancy with 4 or more stories"])
+        self.pipelineClass_label_input=StringVar()
+        self.pipelineClass_label_input=ttk.Combobox(self.frame_right,textvariable=self.pipelineClass_label_input,background="white",value=["None","10 or fewer dwelling units","11 to 46 dwellings","46 or more dwelling units","prevelance of buildings intended for oiccupancy with 4 or more stories"])
         self.pipelineClass_label_input.grid(column=6,row=11)
-        self.seamType_label_input=ttk.Combobox(self.frame_right,background="white",value=["Seamless","Electric Welder","Submerged Arc Welded","Continuous Weld"])
+        self.seamType_label_input=StringVar()
+        self.seamType_label_input=ttk.Combobox(self.frame_right,textvariable=self.seamType_label_input,background="white",value=["Seamless","Electric Welder","Submerged Arc Welded","Continuous Weld"])
         self.seamType_label_input.grid(column=6,row=12)
       
         # Submit Button at the bottom
@@ -243,40 +260,40 @@ class MainWindow:
         global pipelineDetails
         pipelineDetails={}
         pipelineDetails["Client"]= self.client_label_input.get()
-        pipelineDetails["License Number"]= self.license_label_input
-        pipelineDetails["Inspection Date"]= self.inspectiondate_label_input
-        pipelineDetails["Nominal OD"]= self.nominalOD_label_input
-        pipelineDetails["Nominal Wall Thickness"]= self.nominalWT_label_input
-        pipelineDetails["Corrosion Allowance"]= self.corrosionAllowance_label_input
-        pipelineDetails["SMYS"]= self.SMYS_label_input
-        pipelineDetails["Code Design Factor"]= self.designFactor_label_input
-        pipelineDetails["Location Factor"]= self.locationFactor_label_input
-        pipelineDetails["Joint Factor"]= self.jointFactor_label_input
-        pipelineDetails["Temperature Factor"]= self.temperatureFactor_label_input
-        pipelineDetails["License Pressure"]= self.licensePressure_label_input
-        pipelineDetails["Normal Operating Pressure"]= self.operatingPressure_label_input
-        pipelineDetails["Max Operating Pressure"]= self.maximumPressure_label_input
-        pipelineDetails["Substance"]= self.substance_label_input
-        pipelineDetails["To"]= self.to_label_input
-        pipelineDetails["From"]= self.from_label_input
-        pipelineDetails["Length"]= self.length_label_input
-        pipelineDetails["Material"]= self.material_label_input
-        pipelineDetails["Material Type"]= self.materialType_label_input
-        pipelineDetails["Grade"]= self.grade_label_input
-        pipelineDetails["Stress"]= self.stress_label_input
-        pipelineDetails["MOP"]= self.MOP_label_input
-        pipelineDetails["H2S"]= self.h2s_label_input
-        pipelineDetails["Age"]= self.age_label_input
-        pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input
-        pipelineDetails["Road Crossing"]= self.roadCrossing_label_input
-        pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input
-        pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input
-        pipelineDetails["Other Crossings"]= self.otherCrossing_label_input
-        pipelineDetails["Substance Class"]= self.substanceClass_label_input
-        pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input
-        pipelineDetails["Seam Type"]= self.seamType_label_input
+        pipelineDetails["License Number"]= self.license_label_input.get()
+        pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
+        pipelineDetails["Nominal OD"]= self.nominalOD_label_input.get()
+        pipelineDetails["Nominal Wall Thickness"]= self.nominalWT_label_input.get()
+        pipelineDetails["Corrosion Allowance"]= self.corrosionAllowance_label_input.get()
+        pipelineDetails["SMYS"]= self.SMYS_label_input.get()
+        pipelineDetails["Code Design Factor"]= self.designFactor_label_input.get()
+        pipelineDetails["Location Factor"]= self.locationFactor_label_input.get()
+        pipelineDetails["Joint Factor"]= self.jointFactor_label_input.get()
+        pipelineDetails["Temperature Factor"]= self.temperatureFactor_label_input.get()
+        pipelineDetails["License Pressure"]= self.licensePressure_label_input.get()
+        pipelineDetails["Normal Operating Pressure"]= self.operatingPressure_label_input.get()
+        pipelineDetails["Max Operating Pressure"]= self.maximumPressure_label_input.get()
+        pipelineDetails["Substance"]= self.substance_label_input.get()
+        pipelineDetails["To"]= self.to_label_input.get()
+        pipelineDetails["From"]= self.from_label_input.get()
+        pipelineDetails["Length"]= self.length_label_input.get()
+        pipelineDetails["Material"]= self.material_label_input.get()
+        pipelineDetails["Material Type"]= self.materialType_label_input.get()
+        pipelineDetails["Grade"]= self.grade_label_input.get()
+        pipelineDetails["Stress"]= self.stress_label_input.get()
+        pipelineDetails["MOP"]= self.MOP_label_input.get()
+        pipelineDetails["H2S"]= self.h2s_label_input.get()
+        pipelineDetails["Age"]= self.age_label_input.get()
+        pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
+        pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
+        pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
+        pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
+        pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
+        pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
+        pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
+        pipelineDetails["Seam Type"]= self.seamType_label_input.get()
 #----Why doesn't this work? Check formatting input. -       
-        print(pipelineDetails["Client"])
+        print(pipelineDetails)
 
     # gui_elements_remove - Delete current screen widgets
     def gui_elements_remove(self,elements):

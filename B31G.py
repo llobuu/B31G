@@ -275,7 +275,7 @@ class MainWindow:
         pipelineDetails["Substance Class"]= self.substanceClass_label_input
         pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input
         pipelineDetails["Seam Type"]= self.seamType_label_input
-#----Why doesn't this work? Check formatting input.        
+#----Why doesn't this work? Check formatting input. -       
         print(pipelineDetails["Client"])
 
     # gui_elements_remove - Delete current screen widgets

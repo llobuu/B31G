@@ -1,7 +1,7 @@
-from textwrap import fill
-from tkinter import *
+from tkinter import * #This imports all 'objects' and 'methods' from the file as if they were in this file... generally bad practice.   It DOES NOT import all modules...
 from tkinter import ttk
-import getExcel
+from typing import Concatenate # This imports the widgets module.
+import getExcel #Import File #2
 
 
 
@@ -20,9 +20,7 @@ class MainWindow:
         self.frame1.grid(column=0,row=0,columnspan=4,rowspan=4)
 
         # DropDown list for ComboBox
-        self.vendorDropDown=ttk.Combobox(self.frame1,value=["Test","Onstream","Encompass","Rosen"])
-        #self.vendorDropDown.current(0)
-        #self.vendorDropDown.bind("<<ComboboxSelected>>")
+        self.vendorDropDown=ttk.Combobox(self.frame1,value=["Test","Onstream","Encompass","Rosen"],state="readonly")
         self.vendorDropDown.grid(row=0, column=0)
 
         # File Path Button
@@ -32,15 +30,12 @@ class MainWindow:
         # Submit Button
         self.review=Button(self.frame1,text="Submit", command=self.submit_ILI4Review)
         self.review.grid(row=4,column=4)
-        self.gui_elements=[self.vendorDropDown,
-                           self.upload,
-                           self.review,
-                           self.frame1]
+        self.screen1_Elements=[self.frame1]
 
 # Screen #2 - Pipeline Detail Screen
     def pipeline_Detail_Screen(self,event):
         # Clean up Screen 1
-        self.gui_elements_remove(self.gui_elements)
+        self.gui_elements_remove(self.screen1_Elements)
         root.title("Pipeline Specific Data")
 
         # Set up Frames for Screen 2
@@ -213,49 +208,65 @@ class MainWindow:
         self.seamType_label.grid(column=5,row=12,sticky='e')
         
         # Column 6 User Input for Env Factors
-        self.casedCrossing_label_input=StringVar()
-        self.casedCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.casedCrossing_label_input)
+        self.casedCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",state="readonly")
         self.casedCrossing_label_input.grid(column=6,row=5)
-        self.roadCrossing_label_input=StringVar()
-        self.roadCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.roadCrossing_label_input)
+        self.roadCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",state="readonly")
         self.roadCrossing_label_input.grid(column=6,row=6)
-        self.railwayCrossing_label_input=StringVar()
-        self.railwayCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.railwayCrossing_label_input)
+        self.railwayCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",state="readonly")
         self.railwayCrossing_label_input.grid(column=6,row=7)
-        self.stationCrossing_label_input=StringVar()
-        self.stationCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.stationCrossing_label_input)
+        self.stationCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",state="readonly")
         self.stationCrossing_label_input.grid(column=6,row=8)
-        self.otherCrossing_label_input=StringVar()
-        self.otherCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",textvariable=self.otherCrossing_label_input)
+        self.otherCrossing_label_input=ttk.Combobox(self.frame_right,value=["Yes","No"],background="white",state="readonly")
         self.otherCrossing_label_input.grid(column=6,row=9)
-        self.substanceClass_label_input=StringVar()
-        self.substanceClass_label_input=ttk.Combobox(self.frame_right,value=["Gas","Multiphase"],background="white",textvariable=self.substanceClass_label_input)
+        self.substanceClass_label_input=ttk.Combobox(self.frame_right,value=["Gas","Multiphase"],background="white",state="readonly")
         self.substanceClass_label_input.grid(column=6,row=10)
-        self.pipelineClass_label_input=StringVar()
-        self.pipelineClass_label_input=ttk.Combobox(self.frame_right,textvariable=self.pipelineClass_label_input,background="white",value=["None","10 or fewer dwelling units","11 to 46 dwellings","46 or more dwelling units","prevelance of buildings intended for oiccupancy with 4 or more stories"])
+        self.pipelineClass_label_input=ttk.Combobox(self.frame_right,state="readonly",background="white",value=["None","10 or fewer dwelling units","11 to 46 dwellings","46 or more dwelling units","prevelance of buildings intended for oiccupancy with 4 or more stories"])
         self.pipelineClass_label_input.grid(column=6,row=11)
-        self.seamType_label_input=StringVar()
-        self.seamType_label_input=ttk.Combobox(self.frame_right,textvariable=self.seamType_label_input,background="white",value=["Seamless","Electric Welder","Submerged Arc Welded","Continuous Weld"])
+        self.seamType_label_input=ttk.Combobox(self.frame_right,state="readonly",background="white",value=["Seamless","Electric Welder","Submerged Arc Welded","Continuous Weld"])
         self.seamType_label_input.grid(column=6,row=12)
       
         # Submit Button at the bottom
         self.submit_button=ttk.Button(text="Submit",command=self.submit_pipelineDetail)
         self.submit_button.grid(column=7,row=13)
+        self.screen2_Elements=[self.frame_left_upper,
+                           self.frame_left_lower,
+                           self.frame_middle,
+                           self.frame_right,
+                           self.submit_button
+                           ]
+                           
 
 # Screen #3 - ILI Data Display
-    #def iliData_Display()
+    def iliData_Display(self,event):
+        # Clean up Screen 2
+        self.gui_elements_remove(self.screen2_Elements)
+        root.title("ILI Display")
+        key=list(getExcel.newFeaturesList.keys())[0]
 
-    # (Screen #1) pullfile() - Get File Path From User
+        #print(getExcel.newFeaturesList[key])
+
+        self.w3_Upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="#82C836",width=1000,height=100)
+        self.w3_Upper.grid(column=0,row=0,columnspan=(len(getExcel.newFeaturesList[key].keys())))
+
+        self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
+        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeatureList.keys()))
+
+        self.display_Dictionary()
+
+
+
+
+        # (Screen #1) pullfile() - Get File Path From User
     def pullfile(self):
         self.file=getExcel.importILIData()
 
-    # (Screen #1) submit_ILI4Review - Pull ComboBox selection and send to excel sorting. Chance window for display.
+        # (Screen #1) Submit_ILI4Review - Pull ComboBox selection and send to excel sorting. Chance window for display.
     def submit_ILI4Review(self):
         self.vendor=self.vendorDropDown.get()
         getExcel.vendorCheck(self.vendor, self.file)
         self.pipeline_Detail_Screen(self)
       
-    # (Screen #2) submit_pipelineDetail - Send ILI data to...
+        # (Screen #2) Submit_pipelineDetail - Send ILI data to screen 3
     def submit_pipelineDetail(self):
         global pipelineDetails
         pipelineDetails={}
@@ -292,14 +303,25 @@ class MainWindow:
         pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
         pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
         pipelineDetails["Seam Type"]= self.seamType_label_input.get()
-#----Why doesn't this work? Check formatting input. -       
-        print(pipelineDetails)
+        self.iliData_Display(self)
 
-    # gui_elements_remove - Delete current screen widgets
+        # gui_elements_remove - Delete widgets from screen (generic) 
     def gui_elements_remove(self,elements):
         for element in elements:
             element.destroy()
-     
+    
+    def display_Dictionary(self):
+        columnNumber=0
+        rowNumber=1
+        for i in getExcel.newFeaturesList:
+            for j in getExcel.newFeaturesList[i]:
+                labelname=Concatenate("label_"+i)
+                labelname=ttk.Label(self.w3_Lower,text=j,background="white")
+                labelname.grid(column=columnNumber,row=rowNumber)
+                rowNumber=rowNumber+1
+            columnNumber=columnNumber+1
+
+
 def main():
     global root
 

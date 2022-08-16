@@ -1,10 +1,7 @@
 from tkinter import * #This imports all 'objects' and 'methods' from the file as if they were in this file... generally bad practice.   It DOES NOT import all modules...
-from tkinter import ttk
-from typing import Concatenate # This imports the widgets module.
+from tkinter import ttk # This imports the widgets module. 
 import getExcel #Import File #2
-
-
-
+import math
 
 class MainWindow:
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
@@ -249,11 +246,15 @@ class MainWindow:
         self.w3_Upper.grid(column=0,row=0,columnspan=(len(getExcel.newFeaturesList[key].keys())))
 
         self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
-        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeatureList.keys()))
+        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeaturesList.keys()))
+        self.horizontal_Scroll=Scrollbar(self.w3_Lower,orient='horizontal').config(command=self.w3_Lower.xview)
+        self.vertical_Scroll=Scrollbar(self.w3_Lower,orient='vertical').config(command=self.w3_Lower.yview)
+        #self.w3_UploadScreen=Button(self.w3_Upper,borderwidth=1,command=self.upload_Screen,text="Upload Screen",width=500)
+        #self.w3_UploadScreen.grid(column=0,row=0)
 
         self.display_Dictionary()
 
-
+       
 
 
         # (Screen #1) pullfile() - Get File Path From User
@@ -311,15 +312,19 @@ class MainWindow:
             element.destroy()
     
     def display_Dictionary(self):
-        columnNumber=0
         rowNumber=1
+        #print(getExcel.newFeaturesList['WLD-1'])
         for i in getExcel.newFeaturesList:
+            columnNumber=0
             for j in getExcel.newFeaturesList[i]:
-                labelname=Concatenate("label_"+i)
-                labelname=ttk.Label(self.w3_Lower,text=j,background="white")
-                labelname.grid(column=columnNumber,row=rowNumber)
-                rowNumber=rowNumber+1
-            columnNumber=columnNumber+1
+                ttk.Label(self.w3_Lower,background="white",borderwidth=1,text=getExcel.newFeaturesList[i][j]).grid(column=columnNumber,row=rowNumber)
+                #if getExcel.newFeaturesList[i][j]:
+                #    ttk.Label(self.w3_Lower,background="white",borderwidth=1,text="-").grid(column=columnNumber,row=rowNumber)
+                #else:
+                #    ttk.Label(self.w3_Lower,background="white",borderwidth=1,text=getExcel.newFeaturesList[i][j]).grid(column=columnNumber,row=rowNumber)
+                columnNumber=columnNumber+1
+            rowNumber=rowNumber+1
+            
 
 
 def main():

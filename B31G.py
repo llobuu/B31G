@@ -249,7 +249,7 @@ class MainWindow:
         self.w3_Upper.grid(column=0,row=0,columnspan=(len(getExcel.newFeaturesList[key].keys())))
 
         self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
-        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeatureList.keys()))
+        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeaturesList.keys()))
 
         self.display_Dictionary()
 
@@ -311,15 +311,15 @@ class MainWindow:
             element.destroy()
     
     def display_Dictionary(self):
-        columnNumber=0
         rowNumber=1
+
         for i in getExcel.newFeaturesList:
+            columnNumber=0
             for j in getExcel.newFeaturesList[i]:
-                labelname=Concatenate("label_"+i)
-                labelname=ttk.Label(self.w3_Lower,text=j,background="white")
-                labelname.grid(column=columnNumber,row=rowNumber)
-                rowNumber=rowNumber+1
-            columnNumber=columnNumber+1
+                ttk.Label(self.w3_Lower,text=j,background="white").grid(column=columnNumber,row=rowNumber)
+                columnNumber=columnNumber+1
+            rowNumber=rowNumber+1
+            
 
 
 def main():

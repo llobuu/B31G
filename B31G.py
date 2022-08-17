@@ -1,17 +1,51 @@
 from tkinter import * #This imports all 'objects' and 'methods' from the file as if they were in this file... generally bad practice.   It DOES NOT import all modules...
-from tkinter import ttk # This imports the widgets module. 
+from tkinter import ttk
+from turtle import Screen # This imports the widgets module. 
 import getExcel #Import File #2
 import math
 
+
 class MainWindow:
+
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
+        self.screenChoice=0
+        self.main_upperFrame=Frame(master,borderwidth=1,relief="solid",padx=1,pady=1,background="#82C836",width=1000,height=100)
+        self.main_upperFrame.grid(column=0,row=0,sticky=(N,E,S,W),columnspan=3)
         self.main_frame=Frame(master)
-        self.main_frame.grid(row=0,column=0,sticky=(N,E,S,W))
-        self.upload_Screen()
+        self.main_frame.grid(row=1,column=0,sticky=(N,E,S,W),columnspan=3)
+        self.uploadScreen=Button(self.main_upperFrame,text="Upload File",background="blue",command=self.upload_Screen,width=50,height=5)
+        self.uploadScreen.grid(column=0,row=0)
+        self.pipelineDetail_Screen=Button(self.main_upperFrame,text="Pipeline Details",background="yellow",command=self.pipeline_Detail_Screen,width=50,height=5)
+        self.pipelineDetail_Screen.grid(column=1,row=0)
+        self.iliDisplay_Screen=Button(self.main_upperFrame,text="Data",background="red",command=self.iliData_Display,width=50,height=5)
+        self.iliDisplay_Screen.grid(column=2,row=0)
+        
+    def screen_Elements(self,number):
+        if number == 1:
+            return [self.frame1
+                   ]
+        
+        elif number == 2:
+           return [self.frame_left_upper,
+                   self.frame_left_lower,
+                   self.frame_middle,                             
+                   self.frame_right,
+                   self.submit_button
+                   ]
+        elif number == 3:
+            return [self.w3_Lower
+                   ]
+
 # Screen #1 - Upload Screen
     def upload_Screen(self):   
-        root.title("Vendor Data Screen")
+        if self.screenChoice == 2:
+            print("----------",self.screen_Elements(2),"----------")
+            self.gui_elements_remove(self.screen_Elements(2))
+        elif self.screenChoice ==3:
+            print("----------",self.screen_Elements(3),"----------")
+            self.gui_elements_remove(self.screen_Elements(3))
 
+        self.screenChoice = 1
 
         self.frame1=Frame(self.main_frame,borderwidth=1,relief="solid",padx=2,pady=2,bg="red")
         self.frame1.grid(column=0,row=0,columnspan=4,rowspan=4)
@@ -27,13 +61,21 @@ class MainWindow:
         # Submit Button
         self.review=Button(self.frame1,text="Submit", command=self.submit_ILI4Review)
         self.review.grid(row=4,column=4)
-        self.screen1_Elements=[self.frame1]
+
 
 # Screen #2 - Pipeline Detail Screen
-    def pipeline_Detail_Screen(self,event):
+    def pipeline_Detail_Screen(self):
         # Clean up Screen 1
-        self.gui_elements_remove(self.screen1_Elements)
-        root.title("Pipeline Specific Data")
+        if self.screenChoice == 1:
+            print("----------",self.screen_Elements(1),"----------")
+            self.gui_elements_remove(self.screen_Elements(1))
+
+        elif self.screenChoice ==3:
+            print("----------",self.screen_Elements(3),"----------")
+            self.gui_elements_remove(self.screen_Elements(3))
+
+        self.screenChoice = 2
+
 
         # Set up Frames for Screen 2
         self.frame_left_upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
@@ -225,25 +267,28 @@ class MainWindow:
         # Submit Button at the bottom
         self.submit_button=ttk.Button(text="Submit",command=self.submit_pipelineDetail)
         self.submit_button.grid(column=7,row=13)
-        self.screen2_Elements=[self.frame_left_upper,
-                           self.frame_left_lower,
-                           self.frame_middle,
-                           self.frame_right,
-                           self.submit_button
-                           ]
+        
                            
 
 # Screen #3 - ILI Data Display
-    def iliData_Display(self,event):
+    def iliData_Display(self):
         # Clean up Screen 2
-        self.gui_elements_remove(self.screen2_Elements)
-        root.title("ILI Display")
+        print("---------------------------------------------------------------------")
+        print("---------------------------------------------------------------------")
+        print("---------------------------------------------------------------------")
+        if self.screenChoice == 1:
+            self.gui_elements_remove(self.screen_Elements(1))
+        elif self.screenChoice ==2:
+            self.gui_elements_remove(self.screen_Elements(2))
+
+        self.screenChoice = 3
+
         key=list(getExcel.newFeaturesList.keys())[0]
 
         #print(getExcel.newFeaturesList[key])
 
-        self.w3_Upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="#82C836",width=1000,height=100)
-        self.w3_Upper.grid(column=0,row=0,columnspan=(len(getExcel.newFeaturesList[key].keys())))
+        #self.w3_Upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="#82C836",width=1000,height=100)
+        #self.w3_Upper.grid(column=0,row=0,columnspan=(len(getExcel.newFeaturesList[key].keys())))
 
         self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
         self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeaturesList.keys()))

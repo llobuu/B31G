@@ -110,20 +110,4 @@ def Encompass(file):
 
 
 
-        
-
-        
-
-    
-    # Adding Joint IDs as key/ans to features dict
-    #jointID=Testfile['Joint\nID']
-    #for i in jointID:
-        #print("We are checking this: ", jointID[i])
-        #featureID=originalFeature[i]
-        #print("We want to add this to: ",featureID)
-        #print('------------------------------')   
-
-
-
-
 

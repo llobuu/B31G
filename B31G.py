@@ -18,6 +18,8 @@ class MainWindow:
         self.pipelineDetail_Screen.grid(column=1,row=0)
         self.iliDisplay_Screen=Button(self.main_upperFrame,text="Data",command=self.iliData_Display,width=15,height=5)
         self.iliDisplay_Screen.grid(column=2,row=0)
+        self.pipelineDetails={}
+
 
 
 # Screen #1 - Upload Screen
@@ -51,17 +53,79 @@ class MainWindow:
     def pipeline_Detail_Screen(self):
         # Clean up Screen
         if self.screenChoice == 1:
-            print("----------",self.screen_Elements(1),"----------")
             self.gui_elements_remove(self.screen_Elements(1))
 
         elif self.screenChoice ==3:
-            print("----------",self.screen_Elements(3),"----------")
             self.gui_elements_remove(self.screen_Elements(3))
 
         self.screenChoice = 2
+        self.screen2_Setup
+                         
 
+# Screen #3 - ILI Data Display
+    def iliData_Display(self):
+        if self.screenChoice == 1:
+            self.gui_elements_remove(self.screen_Elements(1))
+        elif self.screenChoice ==2:
+            self.gui_elements_remove(self.screen_Elements(2))
 
-        # Set up Frames for Screen 2
+        self.screenChoice = 3
+
+        key=list(getExcel.newFeaturesList.keys())[0]
+
+        self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
+        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeaturesList.keys()))
+
+        self.display_Dictionary()
+ 
+# (Screen #1 Button) pullfile() - Get File Path From User
+    def pullfile(self):
+        self.file=getExcel.importILIData()
+        self.submit_ILI4Review
+
+# (Screen #1 Button) Submit_ILI4Review - Pull ComboBox selection and send to excel sorting. Chance window for display.
+    def submit_ILI4Review(self):
+        self.vendor=self.vendorDropDown.get()
+        getExcel.vendorCheck(self.vendor, self.file)
+      
+# (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
+    def save_pipelineDetail(self):
+        
+        self.pipelineDetails["Client"]= self.client_label_input.get()
+        self.pipelineDetails["License Number"]= self.license_label_input.get()
+        self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
+        self.pipelineDetails["Nominal OD"]= self.nominalOD_label_input.get()
+        self.pipelineDetails["Nominal Wall Thickness"]= self.nominalWT_label_input.get()
+        self.pipelineDetails["Corrosion Allowance"]= self.corrosionAllowance_label_input.get()
+        self.pipelineDetails["SMYS"]= self.SMYS_label_input.get()
+        self.pipelineDetails["Code Design Factor"]= self.designFactor_label_input.get()
+        self.pipelineDetails["Location Factor"]= self.locationFactor_label_input.get()
+        self.pipelineDetails["Joint Factor"]= self.jointFactor_label_input.get()
+        self.pipelineDetails["Temperature Factor"]= self.temperatureFactor_label_input.get()
+        self.pipelineDetails["License Pressure"]= self.licensePressure_label_input.get()
+        self.pipelineDetails["Normal Operating Pressure"]= self.operatingPressure_label_input.get()
+        self.pipelineDetails["Max Operating Pressure"]= self.maximumPressure_label_input.get()
+        self.pipelineDetails["Substance"]= self.substance_label_input.get()
+        self.pipelineDetails["To"]= self.to_label_input.get()
+        self.pipelineDetails["From"]= self.from_label_input.get()
+        self.pipelineDetails["Length"]= self.length_label_input.get()
+        self.pipelineDetails["Material"]= self.material_label_input.get()
+        self.pipelineDetails["Material Type"]= self.materialType_label_input.get()
+        self.pipelineDetails["Grade"]= self.grade_label_input.get()
+        self.pipelineDetails["Stress"]= self.stress_label_input.get()
+        self.pipelineDetails["MOP"]= self.MOP_label_input.get()
+        self.pipelineDetails["H2S"]= self.h2s_label_input.get()
+        self.pipelineDetails["Age"]= self.age_label_input.get()
+        self.pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
+        self.pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
+        self.pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
+        self.pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
+        self.pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
+        self.pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
+        self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
+        self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
+# (Screen 2) - screen2_Setup (load widgets for screen 2) 
+    def screen2_Setup(self,event):
         self.frame_left_upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
         self.frame_left_upper.grid(column=0,row=0,sticky="e,w")
         self.frame_left_lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
@@ -249,72 +313,8 @@ class MainWindow:
         self.seamType_label_input.grid(column=6,row=12)
       
         # Submit Button at the bottom
-        self.submit_button=ttk.Button(self.frame_right,text="Submit",command=self.submit_pipelineDetail)
-        self.submit_button.grid(column=4,row=13)                          
-
-# Screen #3 - ILI Data Display
-    def iliData_Display(self):
-        if self.screenChoice == 1:
-            self.gui_elements_remove(self.screen_Elements(1))
-        elif self.screenChoice ==2:
-            self.gui_elements_remove(self.screen_Elements(2))
-
-        self.screenChoice = 3
-
-        key=list(getExcel.newFeaturesList.keys())[0]
-
-        self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
-        self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeaturesList.keys()))
-
-        self.display_Dictionary()
- 
-# (Screen #1 Button) pullfile() - Get File Path From User
-    def pullfile(self):
-        self.file=getExcel.importILIData()
-        self.submit_ILI4Review
-
-# (Screen #1 Button) Submit_ILI4Review - Pull ComboBox selection and send to excel sorting. Chance window for display.
-    def submit_ILI4Review(self):
-        self.vendor=self.vendorDropDown.get()
-        getExcel.vendorCheck(self.vendor, self.file)
-      
-# (Screen #2 Button) Submit_pipelineDetail - Send ILI data to screen 3
-    def submit_pipelineDetail(self):
-        global pipelineDetails
-        pipelineDetails={}
-        pipelineDetails["Client"]= self.client_label_input.get()
-        pipelineDetails["License Number"]= self.license_label_input.get()
-        pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
-        pipelineDetails["Nominal OD"]= self.nominalOD_label_input.get()
-        pipelineDetails["Nominal Wall Thickness"]= self.nominalWT_label_input.get()
-        pipelineDetails["Corrosion Allowance"]= self.corrosionAllowance_label_input.get()
-        pipelineDetails["SMYS"]= self.SMYS_label_input.get()
-        pipelineDetails["Code Design Factor"]= self.designFactor_label_input.get()
-        pipelineDetails["Location Factor"]= self.locationFactor_label_input.get()
-        pipelineDetails["Joint Factor"]= self.jointFactor_label_input.get()
-        pipelineDetails["Temperature Factor"]= self.temperatureFactor_label_input.get()
-        pipelineDetails["License Pressure"]= self.licensePressure_label_input.get()
-        pipelineDetails["Normal Operating Pressure"]= self.operatingPressure_label_input.get()
-        pipelineDetails["Max Operating Pressure"]= self.maximumPressure_label_input.get()
-        pipelineDetails["Substance"]= self.substance_label_input.get()
-        pipelineDetails["To"]= self.to_label_input.get()
-        pipelineDetails["From"]= self.from_label_input.get()
-        pipelineDetails["Length"]= self.length_label_input.get()
-        pipelineDetails["Material"]= self.material_label_input.get()
-        pipelineDetails["Material Type"]= self.materialType_label_input.get()
-        pipelineDetails["Grade"]= self.grade_label_input.get()
-        pipelineDetails["Stress"]= self.stress_label_input.get()
-        pipelineDetails["MOP"]= self.MOP_label_input.get()
-        pipelineDetails["H2S"]= self.h2s_label_input.get()
-        pipelineDetails["Age"]= self.age_label_input.get()
-        pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
-        pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
-        pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
-        pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
-        pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
-        pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
-        pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
-        pipelineDetails["Seam Type"]= self.seamType_label_input.get()
+        self.save_button=ttk.Button(self.frame_right,text="Save Data",command=self.save_pipelineDetail)
+        self.save_button.grid(column=4,row=13)
 
 # gui_elements_remove - Delete widgets from screen (generic) 
     def gui_elements_remove(self,elements):
@@ -324,7 +324,6 @@ class MainWindow:
 # display_Dictionary - Display ILI data and results to user (generic)
     def display_Dictionary(self):
         rowNumber=1
-        print(getExcel.newFeaturesList['WLD-1'])
 
         self.feature_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
         self.feature_columnHeader.insert(0,"Feature")
@@ -376,11 +375,8 @@ class MainWindow:
         self.longitude_columnHeader.grid(column=15,row=0)
         self.comment_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
         self.comment_columnHeader.insert(0,"Comment")
-        self.comment_columnHeader.grid(column=16,row=0)
-        
-        
-        
-        
+        self.comment_columnHeader.grid(column=16,row=0)     
+
         for i in getExcel.newFeaturesList:
             columnNumber=0
             self.cell=ttk.Entry(self.w3_Lower,background="white",width=10,justify='center')
@@ -396,6 +392,9 @@ class MainWindow:
                 self.cell.grid(column=columnNumber,row=rowNumber)
                 columnNumber=columnNumber+1
             rowNumber=rowNumber+1
+
+
+
     
 # screen_Elements - frames to delete when switching tabs (semi-generic)    
     def screen_Elements(self,number):
@@ -407,7 +406,7 @@ class MainWindow:
                    self.frame_left_lower,
                    self.frame_middle,                             
                    self.frame_right,
-                   self.submit_button
+                   self.save_button
                    ]
         elif number == 3:
             return [self.w3_Lower

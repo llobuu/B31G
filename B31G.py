@@ -2,42 +2,27 @@ from tkinter import * #This imports all 'objects' and 'methods' from the file as
 from tkinter import ttk
 from turtle import Screen # This imports the widgets module. 
 import getExcel #Import File #2
-import math
 
 
 class MainWindow:
-
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
         self.screenChoice=0
-        self.main_upperFrame=Frame(master,borderwidth=1,relief="solid",padx=1,pady=1,background="#82C836",width=1000,height=100)
-        self.main_upperFrame.grid(column=0,row=0,sticky=(N,E,S,W),columnspan=3)
+        self.main_upperFrame=Frame(master,borderwidth=1,relief="solid",padx=400,pady=50,background="#82C836")
+        self.main_upperFrame.grid(column=0,row=0,sticky=(E,W))
+        self.main_upperFrame.grid_columnconfigure(1,pad=50)# First number is the column - will imact both sides; second number is the spacing.
         self.main_frame=Frame(master)
         self.main_frame.grid(row=1,column=0,sticky=(N,E,S,W),columnspan=3)
-        self.uploadScreen=Button(self.main_upperFrame,text="Upload File",background="blue",command=self.upload_Screen,width=50,height=5)
+        self.uploadScreen=Button(self.main_upperFrame,text="Upload File",command=self.upload_Screen,width=15,height=5)
         self.uploadScreen.grid(column=0,row=0)
-        self.pipelineDetail_Screen=Button(self.main_upperFrame,text="Pipeline Details",background="yellow",command=self.pipeline_Detail_Screen,width=50,height=5)
+        self.pipelineDetail_Screen=Button(self.main_upperFrame,text="Pipeline Details",command=self.pipeline_Detail_Screen,width=15,height=5)
         self.pipelineDetail_Screen.grid(column=1,row=0)
-        self.iliDisplay_Screen=Button(self.main_upperFrame,text="Data",background="red",command=self.iliData_Display,width=50,height=5)
+        self.iliDisplay_Screen=Button(self.main_upperFrame,text="Data",command=self.iliData_Display,width=15,height=5)
         self.iliDisplay_Screen.grid(column=2,row=0)
-        
-    def screen_Elements(self,number):
-        if number == 1:
-            return [self.frame1
-                   ]
-        
-        elif number == 2:
-           return [self.frame_left_upper,
-                   self.frame_left_lower,
-                   self.frame_middle,                             
-                   self.frame_right,
-                   self.submit_button
-                   ]
-        elif number == 3:
-            return [self.w3_Lower
-                   ]
+
 
 # Screen #1 - Upload Screen
-    def upload_Screen(self):   
+    def upload_Screen(self):
+        # Clean up Screen
         if self.screenChoice == 2:
             print("----------",self.screen_Elements(2),"----------")
             self.gui_elements_remove(self.screen_Elements(2))
@@ -47,7 +32,7 @@ class MainWindow:
 
         self.screenChoice = 1
 
-        self.frame1=Frame(self.main_frame,borderwidth=1,relief="solid",padx=2,pady=2,bg="red")
+        self.frame1=Frame(self.main_frame,borderwidth=1,relief="solid",padx=2,pady=2)
         self.frame1.grid(column=0,row=0,columnspan=4,rowspan=4)
 
         # DropDown list for ComboBox
@@ -62,10 +47,9 @@ class MainWindow:
         self.review=Button(self.frame1,text="Submit", command=self.submit_ILI4Review)
         self.review.grid(row=4,column=4)
 
-
 # Screen #2 - Pipeline Detail Screen
     def pipeline_Detail_Screen(self):
-        # Clean up Screen 1
+        # Clean up Screen
         if self.screenChoice == 1:
             print("----------",self.screen_Elements(1),"----------")
             self.gui_elements_remove(self.screen_Elements(1))
@@ -265,17 +249,11 @@ class MainWindow:
         self.seamType_label_input.grid(column=6,row=12)
       
         # Submit Button at the bottom
-        self.submit_button=ttk.Button(text="Submit",command=self.submit_pipelineDetail)
-        self.submit_button.grid(column=7,row=13)
-        
-                           
+        self.submit_button=ttk.Button(self.frame_right,text="Submit",command=self.submit_pipelineDetail)
+        self.submit_button.grid(column=4,row=13)                          
 
 # Screen #3 - ILI Data Display
     def iliData_Display(self):
-        # Clean up Screen 2
-        print("---------------------------------------------------------------------")
-        print("---------------------------------------------------------------------")
-        print("---------------------------------------------------------------------")
         if self.screenChoice == 1:
             self.gui_elements_remove(self.screen_Elements(1))
         elif self.screenChoice ==2:
@@ -285,34 +263,22 @@ class MainWindow:
 
         key=list(getExcel.newFeaturesList.keys())[0]
 
-        #print(getExcel.newFeaturesList[key])
-
-        #self.w3_Upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="#82C836",width=1000,height=100)
-        #self.w3_Upper.grid(column=0,row=0,columnspan=(len(getExcel.newFeaturesList[key].keys())))
-
         self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white",width=1000,height=900)
         self.w3_Lower.grid(column=0,row=1,columnspan=(len(getExcel.newFeaturesList[key].keys())),rowspan=len(getExcel.newFeaturesList.keys()))
-        self.horizontal_Scroll=Scrollbar(self.w3_Lower,orient='horizontal').config(command=self.w3_Lower.xview)
-        self.vertical_Scroll=Scrollbar(self.w3_Lower,orient='vertical').config(command=self.w3_Lower.yview)
-        #self.w3_UploadScreen=Button(self.w3_Upper,borderwidth=1,command=self.upload_Screen,text="Upload Screen",width=500)
-        #self.w3_UploadScreen.grid(column=0,row=0)
 
         self.display_Dictionary()
-
-       
-
-
-        # (Screen #1) pullfile() - Get File Path From User
+ 
+# (Screen #1 Button) pullfile() - Get File Path From User
     def pullfile(self):
         self.file=getExcel.importILIData()
+        self.submit_ILI4Review
 
-        # (Screen #1) Submit_ILI4Review - Pull ComboBox selection and send to excel sorting. Chance window for display.
+# (Screen #1 Button) Submit_ILI4Review - Pull ComboBox selection and send to excel sorting. Chance window for display.
     def submit_ILI4Review(self):
         self.vendor=self.vendorDropDown.get()
         getExcel.vendorCheck(self.vendor, self.file)
-        self.pipeline_Detail_Screen(self)
       
-        # (Screen #2) Submit_pipelineDetail - Send ILI data to screen 3
+# (Screen #2 Button) Submit_pipelineDetail - Send ILI data to screen 3
     def submit_pipelineDetail(self):
         global pipelineDetails
         pipelineDetails={}
@@ -349,27 +315,103 @@ class MainWindow:
         pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
         pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
         pipelineDetails["Seam Type"]= self.seamType_label_input.get()
-        self.iliData_Display(self)
 
-        # gui_elements_remove - Delete widgets from screen (generic) 
+# gui_elements_remove - Delete widgets from screen (generic) 
     def gui_elements_remove(self,elements):
         for element in elements:
             element.destroy()
-    
+       
+# display_Dictionary - Display ILI data and results to user (generic)
     def display_Dictionary(self):
         rowNumber=1
-        #print(getExcel.newFeaturesList['WLD-1'])
+        print(getExcel.newFeaturesList['WLD-1'])
+
+        self.feature_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.feature_columnHeader.insert(0,"Feature")
+        self.feature_columnHeader.grid(column=0,row=0)
+        self.jointId_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.jointId_columnHeader.insert(0,"Joint ID")
+        self.jointId_columnHeader.grid(column=1,row=0)
+        self.featureType_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.featureType_columnHeader.insert(0,"Feature Type")
+        self.featureType_columnHeader.grid(column=2,row=0)
+        self.groupID_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.groupID_columnHeader.insert(0,"Group ID")
+        self.groupID_columnHeader.grid(column=3,row=0)
+        self.distance_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.distance_columnHeader.insert(0,"Distance")
+        self.distance_columnHeader.grid(column=4,row=0)
+        self.usGirth_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.usGirth_columnHeader.insert(0,"US\nGirth Weld")
+        self.usGirth_columnHeader.grid(column=5,row=0)
+        self.dsGirth_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.dsGirth_columnHeader.insert(0,"DS\nGirth Weld")
+        self.dsGirth_columnHeader.grid(column=6,row=0)
+        self.jointLength_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.jointLength_columnHeader.insert(0,"Joint Length")
+        self.jointLength_columnHeader.grid(column=7,row=0)
+        self.length_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.length_columnHeader.insert(0,"Length")
+        self.length_columnHeader.grid(column=8,row=0)
+        self.width_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.width_columnHeader.insert(0,"Joint Length")
+        self.width_columnHeader.grid(column=9,row=0)       
+        self.depth_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.depth_columnHeader.insert(0,"Depth")
+        self.depth_columnHeader.grid(column=10,row=0)
+        self.depthPercent_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.depthPercent_columnHeader.insert(0,"Depth %")
+        self.depthPercent_columnHeader.grid(column=11,row=0)
+        self.orientation_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.orientation_columnHeader.insert(0,"Orientation")
+        self.orientation_columnHeader.grid(column=12,row=0)
+        self.intExt_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.intExt_columnHeader.insert(0,"Int/Ext")
+        self.intExt_columnHeader.grid(column=13,row=0)        
+        self.latitude_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.latitude_columnHeader.insert(0,"Latitude")
+        self.latitude_columnHeader.grid(column=14,row=0)        
+        self.longitude_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.longitude_columnHeader.insert(0,"Longitude")
+        self.longitude_columnHeader.grid(column=15,row=0)
+        self.comment_columnHeader=ttk.Entry(self.w3_Lower,background="grey",width=10,justify='center')
+        self.comment_columnHeader.insert(0,"Comment")
+        self.comment_columnHeader.grid(column=16,row=0)
+        
+        
+        
+        
         for i in getExcel.newFeaturesList:
             columnNumber=0
-            for j in getExcel.newFeaturesList[i]:
-                ttk.Label(self.w3_Lower,background="white",borderwidth=1,text=getExcel.newFeaturesList[i][j]).grid(column=columnNumber,row=rowNumber)
-                #if getExcel.newFeaturesList[i][j]:
-                #    ttk.Label(self.w3_Lower,background="white",borderwidth=1,text="-").grid(column=columnNumber,row=rowNumber)
-                #else:
-                #    ttk.Label(self.w3_Lower,background="white",borderwidth=1,text=getExcel.newFeaturesList[i][j]).grid(column=columnNumber,row=rowNumber)
+            self.cell=ttk.Entry(self.w3_Lower,background="white",width=10,justify='center')
+            self.cell.insert(0,i)
+            self.cell.grid(column=columnNumber,row=rowNumber)
+
+            list(getExcel.newFeaturesList.keys())[0]
+
+            columnNumber=columnNumber+1
+            for j in getExcel.newFeaturesList[i]:                
+                self.cell=ttk.Entry(self.w3_Lower,background="white",width=10,justify='center')
+                self.cell.insert(0,getExcel.newFeaturesList[i][j])
+                self.cell.grid(column=columnNumber,row=rowNumber)
                 columnNumber=columnNumber+1
             rowNumber=rowNumber+1
-            
+    
+# screen_Elements - frames to delete when switching tabs (semi-generic)    
+    def screen_Elements(self,number):
+        if number == 1:
+            return [self.frame1
+                   ]
+        elif number == 2:
+           return [self.frame_left_upper,
+                   self.frame_left_lower,
+                   self.frame_middle,                             
+                   self.frame_right,
+                   self.submit_button
+                   ]
+        elif number == 3:
+            return [self.w3_Lower
+                   ]            
 
 
 def main():

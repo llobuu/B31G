@@ -58,9 +58,6 @@ def Encompass(file):
     #print(Testfile.keys())
 
     #variable for only the feature id's.
-
-
-
     originalFeature=Testfile['Feature\nID']
     originalJoint=Testfile['Joint\nID']
     originalFeatureType=Testfile['Feature\nType']

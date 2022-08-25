@@ -1,7 +1,8 @@
 from tkinter import * #This imports all 'objects' and 'methods' from the file as if they were in this file... generally bad practice.   It DOES NOT import all modules...
 from tkinter import ttk
 import getExcel #Import File #2
-import numpy as np
+
+
 
 
 
@@ -112,6 +113,8 @@ class MainWindow:
         self.treescrollX.pack(side="bottom",fill="x")
         self.treescrollY.pack(side="right",fill="y")
 
+        getExcel.dataAnalysis(self.pipelineDetails)
+
         self.display_Dictionary()
  
 # (Screen #1 Button) pullfile() - Get File Path From User
@@ -127,32 +130,82 @@ class MainWindow:
       
 # (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
     def save_pipelineDetail(self):
-        
+        # Column 1
         self.pipelineDetails["Client"]= self.client_label_input.get()
         self.pipelineDetails["License Number"]= self.license_label_input.get()
         self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
-        self.pipelineDetails["Nominal OD"]= self.nominalOD_label_input.get()
-        self.pipelineDetails["Nominal Wall Thickness"]= self.nominalWT_label_input.get()
-        self.pipelineDetails["Corrosion Allowance"]= self.corrosionAllowance_label_input.get()
-        self.pipelineDetails["SMYS"]= self.SMYS_label_input.get()
-        self.pipelineDetails["Code Design Factor"]= self.designFactor_label_input.get()
-        self.pipelineDetails["Location Factor"]= self.locationFactor_label_input.get()
-        self.pipelineDetails["Joint Factor"]= self.jointFactor_label_input.get()
-        self.pipelineDetails["Temperature Factor"]= self.temperatureFactor_label_input.get()
-        self.pipelineDetails["License Pressure"]= self.licensePressure_label_input.get()
-        self.pipelineDetails["Normal Operating Pressure"]= self.operatingPressure_label_input.get()
-        self.pipelineDetails["Max Operating Pressure"]= self.maximumPressure_label_input.get()
+        try:
+            self.pipelineDetails["Nominal OD"]= float(self.nominalOD_label_input.get()) #Int
+        except:
+            pass
+        try:
+            self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get()) #Int
+        except:
+            pass
+        try:
+            self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get()) #Int
+        except:
+            pass
+        try:
+            self.pipelineDetails["SMYS"]= float(self.SMYS_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Code Design Factor"]= float(self.designFactor_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Location Factor"]= float(self.locationFactor_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Joint Factor"]= float(self.jointFactor_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Temperature Factor"]= float(self.temperatureFactor_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["License Pressure"]= float(self.licensePressure_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Normal Operating Pressure"]= float(self.operatingPressure_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Max Operating Pressure"]= float(self.maximumPressure_label_input.get())
+        except:
+            pass
+        # Column 2
         self.pipelineDetails["Substance"]= self.substance_label_input.get()
         self.pipelineDetails["To"]= self.to_label_input.get()
         self.pipelineDetails["From"]= self.from_label_input.get()
-        self.pipelineDetails["Length"]= self.length_label_input.get()
+        try:
+            self.pipelineDetails["Length"]= float(self.length_label_input.get())
+        except:
+            pass
         self.pipelineDetails["Material"]= self.material_label_input.get()
         self.pipelineDetails["Material Type"]= self.materialType_label_input.get()
         self.pipelineDetails["Grade"]= self.grade_label_input.get()
-        self.pipelineDetails["Stress"]= self.stress_label_input.get()
-        self.pipelineDetails["MOP"]= self.MOP_label_input.get()
-        self.pipelineDetails["H2S"]= self.h2s_label_input.get()
-        self.pipelineDetails["Age"]= self.age_label_input.get()
+        try:
+            self.pipelineDetails["Stress"]= float(self.stress_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["MOP"]= float(self.MOP_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["H2S"]= float(self.h2s_label_input.get())
+        except:
+            pass
+        try:
+            self.pipelineDetails["Age"]= float(self.age_label_input.get())
+        except:
+            pass
+        # Column 3
         self.pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
         self.pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
         self.pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
@@ -161,6 +214,7 @@ class MainWindow:
         self.pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
         self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
         self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
+
 # (Screen 2) - screen2_Setup (load widgets for screen 2) 
     def screen2_Setup(self):
         self.frame_left_upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
@@ -359,9 +413,7 @@ class MainWindow:
             element.destroy()
        
 # display_Dictionary - Display ILI data and results to user (generic)
-    def display_Dictionary(self):
-        rowNumber=1
-        
+    def display_Dictionary(self):        
         self.tv1.heading('feature',text='Feature',anchor='n')
         self.tv1.heading('jointID',text='Joint ID',anchor='n')
         self.tv1.heading('featureType',text='Feature\nType',anchor='n')
@@ -391,10 +443,6 @@ class MainWindow:
                     #print("good")    # Test case
                     list.append(getExcel.newFeaturesList[i][j])
             self.tv1.insert("","end",values=list)
-
-
-
-
 
 # screen_Elements - frames to delete when switching tabs (semi-generic)    
     def screen_Elements(self,number):

@@ -1,6 +1,7 @@
 from pyexpat import features
 import pandas as pd
 from tkinter import filedialog as fd
+import math
 newFeaturesList={}
 
 #Need to install 'pandas', 'openpyxl'
@@ -100,27 +101,59 @@ def Encompass(file):
     #print(newFeaturesList.keys())
 
 
- 
+
+def dataAnalysis(pipelineDetails):
+    for i in newFeaturesList:
+        #print("The letter i is: ",i)
+        #print("The list item is: ",newFeaturesList[i])
+        #print("----------")
+        #print("Pipeline Details: ",pipelineDetails)
+
+
+        if newFeaturesList[i]['Depth'] != newFeaturesList[i]['Depth']:
+            pass
+        else:
+            print("")
+            print("--------------------")
+            print("The Feature Length is: ",newFeaturesList[i]['Length'])
+            print("The OD is: ",pipelineDetails['Nominal OD']) 
+            print("The WT is: ",pipelineDetails['Nominal Wall Thickness'])
+            print("")
+            newFeaturesList[i]["Z Value"]=(newFeaturesList[i]['Length']**2)/(pipelineDetails['Nominal OD']*pipelineDetails['Nominal Wall Thickness'])
+
+            # Calculate Original M Value (Original B31G)
+            newFeaturesList[i]["M Original"]=math.sqrt(1+(0.8*newFeaturesList[i]["Z Value"]))
+        
+            # Calculate Modified M Value (Modified B31G)
+            if newFeaturesList[i]["Z Value"]<= 50:
+                newFeaturesList[i]["M Modified"]=math.sqrt(1+(0.6275*newFeaturesList[i]["Z Value"])-(0.003375*(newFeaturesList[i]["Z Value"]**2)))
+            else:
+                newFeaturesList[i]["M Modified"]=(0.032*newFeaturesList[i]["Z Value"])+3.3
+
+            # Calculate Sflow
+            newFeaturesList[i]["Sflow"]=pipelineDetails["SMYS"]*1.1
+
+            # Level 1 Evaluation (Original)
+            dOVERt=newFeaturesList[i]['Depth']/pipelineDetails['Nominal Wall Thickness']
+            
+            
+            if newFeaturesList[i]["Z Value"] <= 20:
+                newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*((1-((2/3)*dOVERt))/(1-(((2/3)*dOVERt)/newFeaturesList[i]['M Original'])))
+            else:
+                newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*(1-dOVERt)
+            # Level 1 Evaluation (Modified)
+            newFeaturesList[i]['SF Modified']=newFeaturesList[i]['Sflow']*((1-(0.85*dOVERt))/(1-((0.85*dOVERt)/newFeaturesList[i]['M Modified'])))
+            print("Z Factor is: ", newFeaturesList[i]['Z Value'])
+            print("Sflow is: ",newFeaturesList[i]['Sflow'])
+            print("dOVERt is: ", dOVERt)
+            print("M Original is: ",newFeaturesList[i]['M Original'])
+            print("M Modified is: ",newFeaturesList[i]['M Modified'])
+            print("SF Original is: ",newFeaturesList[i]['SF Original'])
+            print("SF Modified is: ",newFeaturesList[i]['SF Modified']) 
+
     
-
+               
         
-
-
-
-        
-
-        
-
-    
-    # Adding Joint IDs as key/ans to features dict
-    #jointID=Testfile['Joint\nID']
-    #for i in jointID:
-        #print("We are checking this: ", jointID[i])
-        #featureID=originalFeature[i]
-        #print("We want to add this to: ",featureID)
-        #print('------------------------------')   
-
-
 
 
 

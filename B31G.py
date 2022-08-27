@@ -66,13 +66,10 @@ class MainWindow:
         # Clean up Screen
         if self.screenChoice == 1:
             self.gui_elements_remove(self.screen_Elements(1))
-
         elif self.screenChoice ==3:
             self.gui_elements_remove(self.screen_Elements(3))
-
         self.screenChoice = 2
-        self.screen2_Setup()
-                         
+        self.screen2_Setup()                  
 
 # Screen #3 - ILI Data Display
     def iliData_Display(self):
@@ -131,19 +128,20 @@ class MainWindow:
 # (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
     def save_pipelineDetail(self):
         # Column 1
+
         self.pipelineDetails["Client"]= self.client_label_input.get()
         self.pipelineDetails["License Number"]= self.license_label_input.get()
         self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
         try:
-            self.pipelineDetails["Nominal OD"]= float(self.nominalOD_label_input.get()) #Int
+            self.pipelineDetails["Nominal OD"]= float(self.nominalOD_label_input.get())
         except:
             pass
         try:
-            self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get()) #Int
+            self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get())
         except:
             pass
         try:
-            self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get()) #Int
+            self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get())
         except:
             pass
         try:
@@ -227,6 +225,7 @@ class MainWindow:
         self.frame_right.grid(column=3,row=1,sticky="n")
 
         # Column 1 Pipeline Static Design Details (Labels)
+        
         self.detail_label_1=ttk.Label(self.frame_left_upper,text="Pipeline Identification",background="white", font="Arial 14 bold",anchor="n",justify='center')
         self.detail_label_1.grid(column=0,row=0,columnspan=2)
         self.client_label=ttk.Label(self.frame_left_upper,text="Client: ",background="white")
@@ -403,6 +402,83 @@ class MainWindow:
         self.seamType_label_input=ttk.Combobox(self.frame_right,state="readonly",background="white",value=["Seamless","Electric Welder","Submerged Arc Welded","Continuous Weld"])
         self.seamType_label_input.grid(column=6,row=12)
       
+        #Fill in if not blank:
+        print("Boolean value is: ", bool(self.pipelineDetails)) 
+        if bool(self.pipelineDetails):
+            
+            #Re-Add column 1 Data
+            if bool(self.pipelineDetails['Client']):
+                self.client_label_input.insert(0,self.pipelineDetails['Client'])
+            if bool(self.pipelineDetails['License Number']):
+                self.license_label_input.insert(0,self.pipelineDetails['License Number'])
+            if bool(self.pipelineDetails['Inspection Date']):
+                self.inspectiondate_label_input.insert(0,self.pipelineDetails['Inspection Date'])
+            if bool(self.pipelineDetails['Nominal OD']):
+                self.nominalOD_label_input.insert(0,self.pipelineDetails['Nominal OD'])
+            if bool(self.pipelineDetails['Nominal Wall Thickness']):
+                self.nominalWT_label_input.insert(0,self.pipelineDetails['Nominal Wall Thickness'])
+            if bool(self.pipelineDetails['Corrosion Allowance']):
+                self.corrosionAllowance_label_input.insert(0,self.pipelineDetails['Corrosion Allowance'])
+            if bool(self.pipelineDetails['SMYS']):
+                self.SMYS_label_input.insert(0,self.pipelineDetails['SMYS'])
+            if bool(self.pipelineDetails['Code Design Factor']):
+                self.designFactor_label_input.insert(0,self.pipelineDetails['Code Design Factor'])
+            if bool(self.pipelineDetails['Location Factor']):
+                self.locationFactor_label_input.insert(0,self.pipelineDetails['Location Factor'])
+            if bool(self.pipelineDetails['Joint Factor']):
+                self.jointFactor_label_input.insert(0,self.pipelineDetails['Joint Factor'])
+            if bool(self.pipelineDetails['Temperature Factor']):
+                self.temperatureFactor_label_input.insert(0,self.pipelineDetails['Temperature Factor'])
+            if bool(self.pipelineDetails['License Pressure']):
+                self.licensePressure_label_input.insert(0,self.pipelineDetails['License Pressure'])
+            if bool(self.pipelineDetails['Normal Operating Pressure']):
+                self.operatingPressure_label_input.insert(0,self.pipelineDetails['Normal Operating Pressure'])
+            if bool(self.pipelineDetails['Max Operating Pressure']):
+                self.maximumPressure_label_input.insert(0,self.pipelineDetails['Max Operating Pressure'])
+            
+            # Re-Add Column 2 Input
+            if bool(self.pipelineDetails['Substance']):
+                self.substance_label_input.insert(0,self.pipelineDetails['Substance'])
+            if bool(self.pipelineDetails['To']):
+                self.to_label_input.insert(0,self.pipelineDetails['To'])
+            if bool(self.pipelineDetails['From']):
+                self.from_label_input.insert(0,self.pipelineDetails['From'])
+            if bool(self.pipelineDetails['Length']):
+                self.length_label_input.insert(0,self.pipelineDetails['Length'])
+            if bool(self.pipelineDetails['Material']):
+                self.material_label_input.insert(0,self.pipelineDetails['Material'])
+            if bool(self.pipelineDetails['Material Type']):
+                self.materialType_label_input.insert(0,self.pipelineDetails['Material Type'])
+            if bool(self.pipelineDetails['Grade']):
+                self.grade_label_input.insert(0,self.pipelineDetails['Grade'])
+            if bool(self.pipelineDetails['Stress']):
+                self.stress_label_input.insert(0,self.pipelineDetails['Stress'])
+            if bool(self.pipelineDetails['MOP']):
+                self.MOP_label_input.insert(0,self.pipelineDetails['MOP'])
+            if bool(self.pipelineDetails['H2S']):
+                self.h2s_label_input.insert(0,self.pipelineDetails['H2S'])
+            if bool(self.pipelineDetails['Age']):
+                self.age_label_input.insert(0,self.pipelineDetails['Age'])
+            
+            # Re-Add Column 3 Input
+            if bool(self.pipelineDetails['Cased Crossing']):
+                self.casedCrossing_label_input.insert(0,self.pipelineDetails['Cased Crossing'])
+            if bool(self.pipelineDetails['Road Crossing']):
+                self.roadCrossing_label_input.insert(0,self.pipelineDetails['Road Crossing'])
+            if bool(self.pipelineDetails['Railway Crossing']):
+                self.railwayCrossing_label_input.insert(0,self.pipelineDetails['Railway Crossing'])
+            if bool(self.pipelineDetails['Stations Crossing']):
+                self.stationCrossing_label_input.insert(0,self.pipelineDetails['Stations Crossing'])
+            if bool(self.pipelineDetails['Other Crossings']):
+                self.otherCrossing_label_input.insert(0,self.pipelineDetails['Other Crossings'])
+            if bool(self.pipelineDetails['Substance Class']):
+                self.substanceClass_label_input.insert(0,self.pipelineDetails['Substance Class'])
+            if bool(self.pipelineDetails['Pipeline Class']):
+                self.pipelineClass_label_input.insert(0,self.pipelineDetails['Pipeline Class'])
+            if bool(self.pipelineDetails['Seam Type']):
+                self.seamType_label_input.insert(0,self.pipelineDetails['Seam Type'])
+
+
         # Submit Button at the bottom
         self.save_button=ttk.Button(self.frame_right,text="Save Data",command=self.save_pipelineDetail)
         self.save_button.grid(column=4,row=13)

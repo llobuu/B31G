@@ -36,21 +36,15 @@ def Test(file):
     column1=Testfile['Unnamed: 0']
     print(column1[0])
 
-
-
 # OnStream function
 def OnStream(file):
     print('------------------------------')    
     print("OnStream Printed")
     
-
-
 # Rosen function
 def Rosen(file):
     print('------------------------------')
     print("Rosen Printed")
-
-
 
 # Encompass function
 def Encompass(file):
@@ -100,17 +94,13 @@ def Encompass(file):
         newFeaturesList[originalFeature[i]]['Comments']=originalComments[i]
     #print(newFeaturesList.keys())
 
-
-
 def dataAnalysis(pipelineDetails):
     for i in newFeaturesList:
         #print("The letter i is: ",i)
         #print("The list item is: ",newFeaturesList[i])
         #print("----------")
         #print("Pipeline Details: ",pipelineDetails)
-
-
-        if newFeaturesList[i]['Depth'] != newFeaturesList[i]['Depth']:
+        if newFeaturesList[i]['Depth'] != newFeaturesList[i]['Depth']: #Check if NaN
             pass
         else:
             print("")
@@ -135,23 +125,27 @@ def dataAnalysis(pipelineDetails):
 
             # Level 1 Evaluation (Original)
             dOVERt=newFeaturesList[i]['Depth']/pipelineDetails['Nominal Wall Thickness']
-            
-            
+
             if newFeaturesList[i]["Z Value"] <= 20:
                 newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*((1-((2/3)*dOVERt))/(1-(((2/3)*dOVERt)/newFeaturesList[i]['M Original'])))
             else:
                 newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*(1-dOVERt)
             # Level 1 Evaluation (Modified)
             newFeaturesList[i]['SF Modified']=newFeaturesList[i]['Sflow']*((1-(0.85*dOVERt))/(1-((0.85*dOVERt)/newFeaturesList[i]['M Modified'])))
-            print("Z Factor is: ", newFeaturesList[i]['Z Value'])
-            print("Sflow is: ",newFeaturesList[i]['Sflow'])
-            print("dOVERt is: ", dOVERt)
-            print("M Original is: ",newFeaturesList[i]['M Original'])
-            print("M Modified is: ",newFeaturesList[i]['M Modified'])
-            print("SF Original is: ",newFeaturesList[i]['SF Original'])
-            print("SF Modified is: ",newFeaturesList[i]['SF Modified']) 
+            newFeaturesList[i]['PF Level 1']=(2*newFeaturesList[i]['SF Modified']*pipelineDetails['Nominal Wall Thickness'])/pipelineDetails['Nominal OD']*1000    # Units of kPa
+            #newFeaturesList[i]['PS Level 1']=newFeaturesList[i]['PF Level 1']/SAFETY FACTOR
 
-    
+            # Error Checking
+            #print("Z Factor is: ", newFeaturesList[i]['Z Value'])
+            #print("Sflow is: ",newFeaturesList[i]['Sflow'])
+            #print("dOVERt is: ", dOVERt)
+            #print("M Original is: ",newFeaturesList[i]['M Original'])
+            #print("M Modified is: ",newFeaturesList[i]['M Modified'])
+            #print("SF Original is: ",newFeaturesList[i]['SF Original'])
+            #print("SF Modified is: ",newFeaturesList[i]['SF Modified'])
+            print("PF Level 1 Modified is: ",(newFeaturesList[i]['PF Level 1'],"kPa"))  
+
+            # Level 2 Evaluation
                
         
 

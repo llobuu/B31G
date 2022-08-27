@@ -50,7 +50,6 @@ def Rosen(file):
 def Encompass(file):
     #print('------------------------------')
     Testfile = pd.read_excel(file,sheet_name="Anomalies & Features Listing",usecols=[1,2,3,4,5,6,7,8,10,11,12,13,16,19,20,21,24],skiprows=[0,1,2,3,4,5,6]).to_dict(orient='dict')#you can use column names as well, or index location like this.
-    #print(Testfile.keys())
 
     #variable for only the feature id's.
     originalFeature=Testfile['Feature\nID']

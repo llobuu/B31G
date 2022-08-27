@@ -29,8 +29,6 @@ class MainWindow:
         self.iliDisplay_Screen.grid(column=2,row=0)
         self.pipelineDetails={}
 
-
-
 # Screen #1 - Upload Screen
     def upload_Screen(self):
         # Clean up Screen
@@ -213,6 +211,27 @@ class MainWindow:
         self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
         self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
 
+        #try and set class
+        try:
+            if self.pipelineDetails["Pipeline Class"]=="None":
+                self.pipelineDetails["Class"]="1"
+            elif self.pipelineDetails["Pipeline Class"]=="10 or fewer dwelling units":
+                self.pipelineDetails["Class"]="1"
+            elif self.pipelineDetails["Pipeline Class"]=="11 to 46 dwellings":
+                self.pipelineDetails["Class"]="2"
+            elif self.pipelineDetails["Pipeline Class"]=="46 or more dwelling units":
+                self.pipelineDetails["Class"]="3"
+            else:
+                self.pipelineDetails["Class"]="4"
+
+        except:
+            pass
+
+        try:
+            self.safetyFactors()
+        except:
+            print("You are missing values on page 2")
+
 # (Screen 2) - screen2_Setup (load widgets for screen 2) 
     def screen2_Setup(self):
         self.frame_left_upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
@@ -296,7 +315,7 @@ class MainWindow:
         self.licensePressure_label_input=StringVar()
         self.licensePressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.licensePressure_label_input)
         self.licensePressure_label_input.grid(column=1,row=13)
-        self.operatingPressure_label_input=StringVar()
+        self.operatingPressure_label_input=StringVar() 
         self.operatingPressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.operatingPressure_label_input)
         self.operatingPressure_label_input.grid(column=1,row=14)
         self.maximumPressure_label_input=StringVar()
@@ -401,82 +420,148 @@ class MainWindow:
         self.pipelineClass_label_input.grid(column=6,row=11)
         self.seamType_label_input=ttk.Combobox(self.frame_right,state="readonly",background="white",value=["Seamless","Electric Welder","Submerged Arc Welded","Continuous Weld"])
         self.seamType_label_input.grid(column=6,row=12)
-      
+        
+
         #Fill in if not blank:
-        print("Boolean value is: ", bool(self.pipelineDetails)) 
         if bool(self.pipelineDetails):
             
             #Re-Add column 1 Data
-            if bool(self.pipelineDetails['Client']):
+            try: 
                 self.client_label_input.insert(0,self.pipelineDetails['Client'])
-            if bool(self.pipelineDetails['License Number']):
+            except:
+                pass
+            try:
                 self.license_label_input.insert(0,self.pipelineDetails['License Number'])
-            if bool(self.pipelineDetails['Inspection Date']):
+            except:
+                pass
+            try:
                 self.inspectiondate_label_input.insert(0,self.pipelineDetails['Inspection Date'])
-            if bool(self.pipelineDetails['Nominal OD']):
+            except:
+                pass
+            try: 
                 self.nominalOD_label_input.insert(0,self.pipelineDetails['Nominal OD'])
-            if bool(self.pipelineDetails['Nominal Wall Thickness']):
+            except:
+                pass
+            try: 
                 self.nominalWT_label_input.insert(0,self.pipelineDetails['Nominal Wall Thickness'])
-            if bool(self.pipelineDetails['Corrosion Allowance']):
+            except:
+                pass
+            try: 
                 self.corrosionAllowance_label_input.insert(0,self.pipelineDetails['Corrosion Allowance'])
-            if bool(self.pipelineDetails['SMYS']):
+            except:
+                pass
+            try: 
                 self.SMYS_label_input.insert(0,self.pipelineDetails['SMYS'])
-            if bool(self.pipelineDetails['Code Design Factor']):
+            except:
+                pass
+            try: 
                 self.designFactor_label_input.insert(0,self.pipelineDetails['Code Design Factor'])
-            if bool(self.pipelineDetails['Location Factor']):
+            except:
+                pass
+            try: 
                 self.locationFactor_label_input.insert(0,self.pipelineDetails['Location Factor'])
-            if bool(self.pipelineDetails['Joint Factor']):
+            except:
+                pass
+            try: 
                 self.jointFactor_label_input.insert(0,self.pipelineDetails['Joint Factor'])
-            if bool(self.pipelineDetails['Temperature Factor']):
+            except:
+                pass
+            try: 
                 self.temperatureFactor_label_input.insert(0,self.pipelineDetails['Temperature Factor'])
-            if bool(self.pipelineDetails['License Pressure']):
+            except:
+                pass
+            try: 
                 self.licensePressure_label_input.insert(0,self.pipelineDetails['License Pressure'])
-            if bool(self.pipelineDetails['Normal Operating Pressure']):
+            except:
+                pass
+            try: 
                 self.operatingPressure_label_input.insert(0,self.pipelineDetails['Normal Operating Pressure'])
-            if bool(self.pipelineDetails['Max Operating Pressure']):
+            except:
+                pass
+            try: 
                 self.maximumPressure_label_input.insert(0,self.pipelineDetails['Max Operating Pressure'])
+            except:
+                pass
             
             # Re-Add Column 2 Input
-            if bool(self.pipelineDetails['Substance']):
+            try: 
                 self.substance_label_input.insert(0,self.pipelineDetails['Substance'])
-            if bool(self.pipelineDetails['To']):
+            except:
+                pass
+            try: 
                 self.to_label_input.insert(0,self.pipelineDetails['To'])
-            if bool(self.pipelineDetails['From']):
+            except:
+                pass
+            try: 
                 self.from_label_input.insert(0,self.pipelineDetails['From'])
-            if bool(self.pipelineDetails['Length']):
+            except:
+                pass
+            try: 
                 self.length_label_input.insert(0,self.pipelineDetails['Length'])
-            if bool(self.pipelineDetails['Material']):
+            except:
+                pass
+            try: 
                 self.material_label_input.insert(0,self.pipelineDetails['Material'])
-            if bool(self.pipelineDetails['Material Type']):
+            except:
+                pass
+            try: 
                 self.materialType_label_input.insert(0,self.pipelineDetails['Material Type'])
-            if bool(self.pipelineDetails['Grade']):
+            except:
+                pass
+            try: 
                 self.grade_label_input.insert(0,self.pipelineDetails['Grade'])
-            if bool(self.pipelineDetails['Stress']):
+            except:
+                pass
+            try: 
                 self.stress_label_input.insert(0,self.pipelineDetails['Stress'])
-            if bool(self.pipelineDetails['MOP']):
+            except:
+                pass
+            try: 
                 self.MOP_label_input.insert(0,self.pipelineDetails['MOP'])
-            if bool(self.pipelineDetails['H2S']):
+            except:
+                pass
+            try: 
                 self.h2s_label_input.insert(0,self.pipelineDetails['H2S'])
-            if bool(self.pipelineDetails['Age']):
+            except:
+                pass
+            try: 
                 self.age_label_input.insert(0,self.pipelineDetails['Age'])
+            except:
+                pass
             
             # Re-Add Column 3 Input
-            if bool(self.pipelineDetails['Cased Crossing']):
-                self.casedCrossing_label_input.insert(0,self.pipelineDetails['Cased Crossing'])
-            if bool(self.pipelineDetails['Road Crossing']):
-                self.roadCrossing_label_input.insert(0,self.pipelineDetails['Road Crossing'])
-            if bool(self.pipelineDetails['Railway Crossing']):
-                self.railwayCrossing_label_input.insert(0,self.pipelineDetails['Railway Crossing'])
-            if bool(self.pipelineDetails['Stations Crossing']):
-                self.stationCrossing_label_input.insert(0,self.pipelineDetails['Stations Crossing'])
-            if bool(self.pipelineDetails['Other Crossings']):
-                self.otherCrossing_label_input.insert(0,self.pipelineDetails['Other Crossings'])
-            if bool(self.pipelineDetails['Substance Class']):
-                self.substanceClass_label_input.insert(0,self.pipelineDetails['Substance Class'])
-            if bool(self.pipelineDetails['Pipeline Class']):
-                self.pipelineClass_label_input.insert(0,self.pipelineDetails['Pipeline Class'])
-            if bool(self.pipelineDetails['Seam Type']):
-                self.seamType_label_input.insert(0,self.pipelineDetails['Seam Type'])
+            try: 
+                self.casedCrossing_label_input.set(self.pipelineDetails["Cased Crossing"])
+            except:
+                pass
+            try: 
+                self.roadCrossing_label_input.set(self.pipelineDetails['Road Crossing'])
+            except:
+                pass
+            try: 
+                self.railwayCrossing_label_input.set(self.pipelineDetails['Railway Crossing'])
+            except:
+                pass
+            try: 
+                self.stationCrossing_label_input.set(self.pipelineDetails['Stations Crossing'])
+            except:
+                pass
+            try: 
+                self.otherCrossing_label_input.set(self.pipelineDetails['Other Crossings'])
+            except:
+                pass
+            try: 
+                self.substanceClass_label_input.set(self.pipelineDetails['Substance Class'])
+            except:
+                pass
+            try: 
+                self.pipelineClass_label_input.set(self.pipelineDetails['Pipeline Class'])
+            except:
+                pass
+            try: 
+                self.seamType_label_input.set(self.pipelineDetails['Seam Type'])
+            except:
+                pass
 
 
         # Submit Button at the bottom
@@ -536,12 +621,101 @@ class MainWindow:
             return [self.w3_Lower
                    ]            
 
+# Check pipeline Safety Factors
+    def safetyFactors(self):
+        # CSA Z662-19, Table 4.2 (Gas [non-sour] & HVP [non-sour])
+        self.sweetGasTable = {
+            "General": {
+                "1": float(1),
+                "2": float(0.9),
+                "3": float(0.7),
+                "4": float(0.55)},
+            "Cased Crossing":{
+                "1": float(1),
+                "2": float(0.9),
+                "3": float(0.7),
+                "4": float(0.55)},
+            "Roads":{
+                "1": float(0.75),
+                "2": float(0.625),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Railways":{
+                "1": float(0.625),
+                "2": float(0.625),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Stations":{
+                "1": float(0.625),
+                "2": float(0.625),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Other":{
+                "1": float(0.75),
+                "2": float(0.75),
+                "3": float(0.625),
+                "4": float(0.5)}
+        }
+        # CSA Z662-19, Table 4.2 (Sour Service Fluids)
+        self.sourGasTable = {
+            "General": {
+                "1": float(0.9),
+                "2": float(0.75),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Cased Crossing":{
+                "1": float(0.9),
+                "2": float(0.75),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Roads":{
+                "1": float(0.75),
+                "2": float(0.625),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Railways":{
+                "1": float(0.625),
+                "2": float(0.625),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Stations":{
+                "1": float(0.625),
+                "2": float(0.625),
+                "3": float(0.625),
+                "4": float(0.5)},
+            "Other":{
+                "1": float(0.75),
+                "2": float(0.75),
+                "3": float(0.625),
+                "4": float(0.5)}
+        }
+        #CSA Z662-19, Table 4.3
+        self.weldType={
+            "Seamless": float(1),
+            "Electric Welder": float(1),
+            "Submerged Arc Welded": float(1),
+            "Continuous Weld": float(0.6)
+            }
+        locationNumber=10
+        for i in self.sweetGasTable:
+            if self.pipelineDetails["Substance Class"]=="Gas":
+                self.pipelineDetails[i+' Safety Factor']=self.sweetGasTable[i][self.pipelineDetails['Class']]
+            else:
+                self.pipelineDetails[i+' Safety Factor']=self.sourGasTable[i][self.pipelineDetails['Class']]
+            if self.pipelineDetails[i+' Safety Factor']<=locationNumber:
+                locationNumber=self.pipelineDetails[i+' Safety Factor']
+            else:
+                pass
+        self.pipelineDetails['Location Factor']=locationNumber
+        self.pipelineDetails['Joint Factor']=self.weldType[self.pipelineDetails["Seam Type"]]
+        self.pipelineDetails['MaxDesignFactor']=self.pipelineDetails['Code Design Factor']*self.pipelineDetails['Location Factor']*self.pipelineDetails['Temperature Factor']
+
 
 def main():
     global root
 
     root=Tk()
-    root.geometry("2200x1300")
+    root.geometry("2000x1300")
     #root.resizable(width=FALSE,height=FALSE)
     window=MainWindow(root)
     

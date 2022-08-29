@@ -2,17 +2,13 @@ from tkinter import * #This imports all 'objects' and 'methods' from the file as
 from tkinter import ttk
 import getExcel #Import File #2
 
-
-
-
-
 class MainWindow:
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
         self.screenChoice=0
         self.main_upperFrame=Frame(master,borderwidth=1,background="#82C836",width=2200,height=1300)
         self.main_upperFrame.grid(column=0,row=0,sticky=(E,W))
-        self.main_upperFrame.grid_columnconfigure(0,pad=520)
-        self.main_upperFrame.grid_columnconfigure(1,pad=520)# First number is the column - will imact both sides; second number is the spacing.
+        self.main_upperFrame.grid_columnconfigure(0,pad=100)
+        self.main_upperFrame.grid_columnconfigure(1,pad=100)# First number is the column - will imact both sides; second number is the spacing.
        # self.main_upperFrame.propagate(False)
 
         self.main_frame=Frame(master,height=700)
@@ -131,7 +127,7 @@ class MainWindow:
         self.pipelineDetails["License Number"]= self.license_label_input.get()
         self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
         try:
-            self.pipelineDetails["Nominal OD"]= float(self.nominalOD_label_input.get())
+            self.pipelineDetails["Nominal ID"]= float(self.nominalID_label_input.get())
         except:
             pass
         try:
@@ -167,7 +163,7 @@ class MainWindow:
         except:
             pass
         try:
-            self.pipelineDetails["Normal Operating Pressure"]= float(self.operatingPressure_label_input.get())
+            self.pipelineDetails["Normal Operating Temperature"]= float(self.operatingTemperature_label_input.get())
         except:
             pass
         try:
@@ -255,8 +251,8 @@ class MainWindow:
         self.inspectiondate_label.grid(column=0,row=3,sticky='e')
         self.detail_label_2=ttk.Label( self.frame_left_lower,text="Pipeline Static Design Details",background="white", font="Arial 14 bold",width=30,anchor="n",justify='center')
         self.detail_label_2.grid(column=0,row=4,columnspan=2)
-        self.nominalOD_label=ttk.Label( self.frame_left_lower,text="Nominal OD: ",background="white")
-        self.nominalOD_label.grid(column=0,row=5,sticky='e')
+        self.nominalID_label=ttk.Label( self.frame_left_lower,text="Nominal ID: ",background="white")
+        self.nominalID_label.grid(column=0,row=5,sticky='e')
         self.nominalWT_label=ttk.Label( self.frame_left_lower,text="Nominal Wall Thickness (WT): ",background="white")
         self.nominalWT_label.grid(column=0,row=6,sticky='e')
         self.corrosionAllowance_label=ttk.Label( self.frame_left_lower,text="Corrosion/Inspection Allowance: ",background="white")
@@ -273,8 +269,8 @@ class MainWindow:
         self.temperatureFactor_label.grid(column=0,row=12,sticky='e')
         self.licensePressure_label=ttk.Label( self.frame_left_lower,text="License Pressure (kPa): ",background="white")
         self.licensePressure_label.grid(column=0,row=13,sticky='e')
-        self.operatingPressure_label=ttk.Label( self.frame_left_lower,text="Normal Operating Pressure (kPa): ",background="white")
-        self.operatingPressure_label.grid(column=0,row=14,sticky='e')
+        self.operatingTemperature_label=ttk.Label( self.frame_left_lower,text="Normal Operating Temperature (oC): ",background="white")
+        self.operatingTemperature_label.grid(column=0,row=14,sticky='e')
         self.maximumPressure_label=ttk.Label( self.frame_left_lower,text="Maximum Possible Pressure (kPa): ",background="white")
         self.maximumPressure_label.grid(column=0,row=15,sticky='e')
         
@@ -288,9 +284,9 @@ class MainWindow:
         self.inspectiondate_label_input=StringVar()
         self.inspectiondate_label_input=ttk.Entry(self.frame_left_upper,textvariable=self.inspectiondate_label_input)
         self.inspectiondate_label_input.grid(column=1,row=3)
-        self.nominalOD_label_input=StringVar()
-        self.nominalOD_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.nominalOD_label_input)
-        self.nominalOD_label_input.grid(column=1,row=5)
+        self.nominalID_label_input=StringVar()
+        self.nominalID_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.nominalID_label_input)
+        self.nominalID_label_input.grid(column=1,row=5)
         self.nominalWT_label_input=StringVar()
         self.nominalWT_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.nominalWT_label_input)
         self.nominalWT_label_input.grid(column=1,row=6)
@@ -315,9 +311,9 @@ class MainWindow:
         self.licensePressure_label_input=StringVar()
         self.licensePressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.licensePressure_label_input)
         self.licensePressure_label_input.grid(column=1,row=13)
-        self.operatingPressure_label_input=StringVar() 
-        self.operatingPressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.operatingPressure_label_input)
-        self.operatingPressure_label_input.grid(column=1,row=14)
+        self.operatingTemperature_label_input=StringVar() 
+        self.operatingTemperature_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.operatingTemperature_label_input)
+        self.operatingTemperature_label_input.grid(column=1,row=14)
         self.maximumPressure_label_input=StringVar()
         self.maximumPressure_label_input=ttk.Entry( self.frame_left_lower,textvariable=self.maximumPressure_label_input)
         self.maximumPressure_label_input.grid(column=1,row=15)
@@ -439,7 +435,7 @@ class MainWindow:
             except:
                 pass
             try: 
-                self.nominalOD_label_input.insert(0,self.pipelineDetails['Nominal OD'])
+                self.nominalID_label_input.insert(0,self.pipelineDetails['Nominal ID'])
             except:
                 pass
             try: 
@@ -475,7 +471,7 @@ class MainWindow:
             except:
                 pass
             try: 
-                self.operatingPressure_label_input.insert(0,self.pipelineDetails['Normal Operating Pressure'])
+                self.operatingTemperature_label_input.insert(0,self.pipelineDetails['Normal Operating Pressure'])
             except:
                 pass
             try: 
@@ -621,7 +617,7 @@ class MainWindow:
             return [self.w3_Lower
                    ]            
 
-# Check pipeline Safety Factors
+# safetyFactors - Check pipeline Safety Factors
     def safetyFactors(self):
         # CSA Z662-19, Table 4.2 (Gas [non-sour] & HVP [non-sour])
         self.sweetGasTable = {
@@ -696,6 +692,13 @@ class MainWindow:
             "Submerged Arc Welded": float(1),
             "Continuous Weld": float(0.6)
             }
+        self.tempTable = {
+            "120": float(1),
+            "150": float(0.9),
+            "180": float(0.7),
+            "200": float(0.91),
+            "230": float(0.87)
+        }
         locationNumber=10
         for i in self.sweetGasTable:
             if self.pipelineDetails["Substance Class"]=="Gas":
@@ -708,8 +711,25 @@ class MainWindow:
                 pass
         self.pipelineDetails['Location Factor']=locationNumber
         self.pipelineDetails['Joint Factor']=self.weldType[self.pipelineDetails["Seam Type"]]
+        print(self.pipelineDetails["Normal Operating Temperature"])
+        if self.pipelineDetails["Normal Operating Temperature"] <= 120:
+            self.pipelineDetails['Temperature Factor']=self.tempTable['120']
+        elif self.pipelineDetails["Normal Operating Temperature"] <= 150:
+            self.pipelineDetails["Temperature Factor"] = self.tempTable[150]
+        elif self.pipelineDetails["Normal Operating Temperature"] <= 180:
+            self.pipelineDetails["Temperature Factor"] = self.tempTable[180]
+        elif self.pipelineDetails["Normal Operating Temperature"] <= 200:
+            self.pipelineDetails["Temperature Factor"] = self.tempTable[200]
+        else:
+            self.pipelineDetails["Temperature Factor"] = self.tempTable[230]
+        self.pipelineDetails["Code Design Factor"]=float(0.8)
         self.pipelineDetails['MaxDesignFactor']=self.pipelineDetails['Code Design Factor']*self.pipelineDetails['Location Factor']*self.pipelineDetails['Temperature Factor']
+        self.pipelineDetails['SafetyFactor']=1/self.pipelineDetails['MaxDesignFactor']
+        
 
+        print("Temp Factor: ",self.pipelineDetails["Temperature Factor"]) 
+        print("Max Design Factor: ", self.pipelineDetails['MaxDesignFactor'])
+        print("Safety Factor: ",self.pipelineDetails['SafetyFactor']) 
 
 def main():
     global root

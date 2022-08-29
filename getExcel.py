@@ -49,7 +49,7 @@ def Rosen(file):
 # Encompass function
 def Encompass(file):
     #print('------------------------------')
-    Testfile = pd.read_excel(file,sheet_name="Anomalies & Features Listing",usecols=[1,2,3,4,5,6,7,8,10,11,12,13,16,19,20,21,24],skiprows=[0,1,2,3,4,5,6]).to_dict(orient='dict')#you can use column names as well, or index location like this.
+    Testfile = pd.read_excel(file,sheet_name="Anomalies & Features Listing",usecols=[1,2,3,4,5,6,7,8,9,10,11,12,13,16,19,20,21,24],skiprows=[0,1,2,3,4,5,6]).to_dict(orient='dict')#you can use column names as well, or index location like this.
 
     #variable for only the feature id's.
     originalFeature=Testfile['Feature\nID']
@@ -69,12 +69,13 @@ def Encompass(file):
     originalLatitude=Testfile['Latitude']
     originalLongitude=Testfile['Longitude']
     originalComments=Testfile['Comments']
+    originalWallThickness=Testfile['Wall\nThickness']
     
     #Create a dict of feature id's, to later add components (like a hash)
     for i in Testfile['Feature\nID']:
  # Add the feature as level 1 dict       
         newFeaturesList[originalFeature[i]]={}
- # Add all level 2 items for disct (Joint ID, 
+ # Add all level 2 items to dict 
         newFeaturesList[originalFeature[i]]['Joint ID']=originalJoint[i]
         newFeaturesList[originalFeature[i]]['Feature Type']=originalFeatureType[i]
         newFeaturesList[originalFeature[i]]['Group ID']=originalGroup[i]
@@ -82,6 +83,7 @@ def Encompass(file):
         newFeaturesList[originalFeature[i]]['US Girth Weld']=originalUSGW[i]
         newFeaturesList[originalFeature[i]]['DS Girth Weld']=originalDSGW[i]
         newFeaturesList[originalFeature[i]]['Joint Length']=originalJointLength[i]
+        newFeaturesList[originalFeature[i]]['Wall Thickness']=originalWallThickness[i]
         newFeaturesList[originalFeature[i]]['Length']=originalLength[i]
         newFeaturesList[originalFeature[i]]['Width']=originalWidth[i]
         newFeaturesList[originalFeature[i]]['Depth']=originalDepth[i]
@@ -95,20 +97,12 @@ def Encompass(file):
 
 def dataAnalysis(pipelineDetails):
     for i in newFeaturesList:
-        #print("The letter i is: ",i)
-        #print("The list item is: ",newFeaturesList[i])
-        #print("----------")
-        #print("Pipeline Details: ",pipelineDetails)
         if newFeaturesList[i]['Depth'] != newFeaturesList[i]['Depth']: #Check if NaN
             pass
         else:
-            print("")
+            newFeaturesList[i]['Nominal OD']=pipelineDetails['Nominal ID']+(2*newFeaturesList[i]['Wall Thickness'])
             print("--------------------")
-            print("The Feature Length is: ",newFeaturesList[i]['Length'])
-            print("The OD is: ",pipelineDetails['Nominal OD']) 
-            print("The WT is: ",pipelineDetails['Nominal Wall Thickness'])
-            print("")
-            newFeaturesList[i]["Z Value"]=(newFeaturesList[i]['Length']**2)/(pipelineDetails['Nominal OD']*pipelineDetails['Nominal Wall Thickness'])
+            newFeaturesList[i]["Z Value"]=(newFeaturesList[i]['Length']**2)/(newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Wall Thickness'])
 
             # Calculate Original M Value (Original B31G)
             newFeaturesList[i]["M Original"]=math.sqrt(1+(0.8*newFeaturesList[i]["Z Value"]))
@@ -123,7 +117,7 @@ def dataAnalysis(pipelineDetails):
             newFeaturesList[i]["Sflow"]=pipelineDetails["SMYS"]*1.1
 
             # Level 1 Evaluation (Original)
-            dOVERt=newFeaturesList[i]['Depth']/pipelineDetails['Nominal Wall Thickness']
+            dOVERt=newFeaturesList[i]['Depth']/newFeaturesList[i]['Wall Thickness']
 
             if newFeaturesList[i]["Z Value"] <= 20:
                 newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*((1-((2/3)*dOVERt))/(1-(((2/3)*dOVERt)/newFeaturesList[i]['M Original'])))
@@ -131,9 +125,11 @@ def dataAnalysis(pipelineDetails):
                 newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*(1-dOVERt)
             # Level 1 Evaluation (Modified)
             newFeaturesList[i]['SF Modified']=newFeaturesList[i]['Sflow']*((1-(0.85*dOVERt))/(1-((0.85*dOVERt)/newFeaturesList[i]['M Modified'])))
-            newFeaturesList[i]['PF Level 1']=(2*newFeaturesList[i]['SF Modified']*pipelineDetails['Nominal Wall Thickness'])/pipelineDetails['Nominal OD']*1000    # Units of kPa
-            #newFeaturesList[i]['PS Level 1']=newFeaturesList[i]['PF Level 1']/SAFETY FACTOR
-
+            newFeaturesList[i]['PF Level 1(Original)']=(2*newFeaturesList[i]['SF Original']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000
+            newFeaturesList[i]['PF Level 1(Modified)']=(2*newFeaturesList[i]['SF Modified']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000    # Units of kPa
+            
+            newFeaturesList[i]['PS Level 1(Original)']=newFeaturesList[i]['PF Level 1(Original)']/pipelineDetails['SafetyFactor']
+            newFeaturesList[i]['PS Level 1(Modified)']=newFeaturesList[i]['PF Level 1(Modified)']/pipelineDetails['SafetyFactor']
             # Error Checking
             #print("Z Factor is: ", newFeaturesList[i]['Z Value'])
             #print("Sflow is: ",newFeaturesList[i]['Sflow'])
@@ -142,10 +138,17 @@ def dataAnalysis(pipelineDetails):
             #print("M Modified is: ",newFeaturesList[i]['M Modified'])
             #print("SF Original is: ",newFeaturesList[i]['SF Original'])
             #print("SF Modified is: ",newFeaturesList[i]['SF Modified'])
-            print("PF Level 1 Modified is: ",(newFeaturesList[i]['PF Level 1'],"kPa"))  
+            #print("PF Level 1 Original is: ",(newFeaturesList[i]['PF Level 1(Original)'],"kPa"))
+            #print("PF Level 1 Modified is: ",(newFeaturesList[i]['PF Level 1(Modified)'],"kPa"))
+            #print("SF (Original) is: ",newFeaturesList[i]['PS Level 1(Original)'])
+            #print("SF (Modified) is: ",newFeaturesList[i]['PS Level 1(Modified)'])
 
             # Level 2 Evaluation
-               
+            newFeaturesList[i]['Ao']=(math.pi/4)*((newFeaturesList[i]['Nominal OD']**2)-(pipelineDeatails['Nominal ID']**2))
+            print("Ao is: ", newFeaturesList[i]['Ao'])
+            newFeaturesList[i]['A']=(math.pi/4)*(((newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Depth'])**2)-(pipelineDeatails['Nominal ID']**2))
+            print("A is: ", newFeaturesList[i]['A'])
+
         
 
 

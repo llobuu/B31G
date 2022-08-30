@@ -5,23 +5,23 @@ import getExcel #Import File #2
 class MainWindow:
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
         self.screenChoice=0
-        self.main_upperFrame=Frame(master,borderwidth=1,background="light blue",width=2200,height=1300)
-        self.main_upperFrame.grid(column=0,row=0,sticky=(E,W))
-        self.main_upperFrame.grid_columnconfigure(0,pad=100)
-        self.main_upperFrame.grid_columnconfigure(1,pad=100)# First number is the column - will imact both sides; second number is the spacing.
+        self.main_leftFrame=Frame(master,borderwidth=1,background="light blue",width=20)
+        self.main_leftFrame.grid(column=0,row=0,sticky=(E,W))
+        self.main_leftFrame.grid_columnconfigure(0,pad=20)
+        self.main_leftFrame.grid_columnconfigure(1,pad=20)# First number is the column - will imact both sides; second number is the spacing.
        # self.main_upperFrame.propagate(False)
 
-        self.main_frame=Frame(master,height=700)
-        self.main_frame.grid(row=1,column=0,sticky=(N,E,S,W))
+        self.main_frame=Frame(master, background='green',width=1500,height=100)
+        self.main_frame.grid(row=0,column=1,sticky=(N,S,E,W))
         self.main_frame.propagate(False)
 
-        self.uploadScreen=Button(self.main_upperFrame,text="Upload File",command=self.upload_Screen,width=40,height=4)
+        self.uploadScreen=Button(self.main_leftFrame,text="Upload File",command=self.upload_Screen,width=15,height=4)
         self.uploadScreen.grid(column=0,row=0)  
 
-        self.pipelineDetail_Screen=Button(self.main_upperFrame,text="Pipeline Details",command=self.pipeline_Detail_Screen,width=40,height=4)
+        self.pipelineDetail_Screen=Button(self.main_leftFrame,text="Pipeline Details",command=self.pipeline_Detail_Screen,width=15,height=4)
         self.pipelineDetail_Screen.grid(column=0,row=1)
 
-        self.iliDisplay_Screen=Button(self.main_upperFrame,text="Data",command=self.iliData_Display,width=40,height=4)
+        self.iliDisplay_Screen=Button(self.main_leftFrame,text="Data",command=self.iliData_Display,width=15,height=4)
         self.iliDisplay_Screen.grid(column=0,row=2)
         self.pipelineDetails={}
 
@@ -72,10 +72,10 @@ class MainWindow:
 
         self.screenChoice = 3
 
-        self.w3_Lower=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
-        self.w3_Lower.place(relheight=1,relwidth=1)
+        self.rightFrame=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
+        self.rightFrame.place(width=1500,relheight=1)
 
-        self.tv1=ttk.Treeview(self.w3_Lower,columns=('feature','jointID','featureType','groupID','distance','girthUS','girthDS','jointLength','length','width','depth','depthPercent','orientation','intExt','latitude','longitude','comment'),show='headings')
+        self.tv1=ttk.Treeview(self.rightFrame,columns=('feature','jointID','featureType','groupID','distance','girthUS','girthDS','jointLength','length','width','depth','depthPercent','orientation','intExt','latitude','longitude','comment'),show='headings')
         self.tv1.place(relheight=1,relwidth=1,)
         self.tv1.column("#1",anchor=CENTER,width=70,stretch=False)
         self.tv1.column("#2",anchor=CENTER,width=70,stretch=False)
@@ -96,8 +96,8 @@ class MainWindow:
         self.tv1.column("#17",anchor=CENTER,width=70,stretch=False)
 
 
-        self.treescrollY=Scrollbar(self.w3_Lower,orient='vertical',command=self.tv1.yview)
-        self.treescrollX=Scrollbar(self.w3_Lower,orient='horizontal',command=self.tv1.xview)
+        self.treescrollY=Scrollbar(self.rightFrame,orient='vertical',command=self.tv1.yview)
+        self.treescrollX=Scrollbar(self.rightFrame,orient='horizontal',command=self.tv1.xview)
         self.tv1.configure(xscrollcommand=self.treescrollX.set,yscrollcommand=self.treescrollY.set)
         self.treescrollX.pack(side="bottom",fill="x")
         self.treescrollY.pack(side="right",fill="y")
@@ -117,115 +117,6 @@ class MainWindow:
         self.vendor=self.vendorDropDown.get()
         getExcel.vendorCheck(self.vendor, self.file)
       
-# (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
-    def save_pipelineDetail(self):
-        # Column 1
-        try:
-            self.pipelineDetails["Client"]= self.client_label_input.get()
-            self.pipelineDetails["License Number"]= self.license_label_input.get()
-            self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
-            try:
-                self.pipelineDetails["Nominal ID"]= float(self.nominalID_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["SMYS"]= float(self.SMYS_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Code Design Factor"]= float(self.designFactor_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Location Factor"]= float(self.locationFactor_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Joint Factor"]= float(self.jointFactor_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Temperature Factor"]= float(self.temperatureFactor_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["License Pressure"]= float(self.licensePressure_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Normal Operating Temperature"]= float(self.operatingTemperature_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Max Operating Pressure"]= float(self.maximumPressure_label_input.get())
-            except:
-                pass
-        # Column 2
-            self.pipelineDetails["Substance"]= self.substance_label_input.get()
-            self.pipelineDetails["To"]= self.to_label_input.get()
-            self.pipelineDetails["From"]= self.from_label_input.get()
-            try:
-                self.pipelineDetails["Length"]= float(self.length_label_input.get())
-            except:
-                pass
-            self.pipelineDetails["Material"]= self.material_label_input.get()
-            self.pipelineDetails["Material Type"]= self.materialType_label_input.get()
-            self.pipelineDetails["Grade"]= self.grade_label_input.get()
-            try:
-                self.pipelineDetails["Stress"]= float(self.stress_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["MOP"]= float(self.MOP_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["H2S"]= float(self.h2s_label_input.get())
-            except:
-                pass
-            try:
-                self.pipelineDetails["Age"]= float(self.age_label_input.get())
-            except:
-                pass
-        # Column 3
-            self.pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
-            self.pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
-            self.pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
-            self.pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
-            self.pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
-            self.pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
-            self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
-            self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
-
-        #try and set class
-            try:
-                if self.pipelineDetails["Pipeline Class"]=="None":
-                    self.pipelineDetails["Class"]="1"
-                elif self.pipelineDetails["Pipeline Class"]=="10 or fewer dwelling units":
-                    self.pipelineDetails["Class"]="1"
-                elif self.pipelineDetails["Pipeline Class"]=="11 to 46 dwellings":
-                    self.pipelineDetails["Class"]="2"
-                elif self.pipelineDetails["Pipeline Class"]=="46 or more dwelling units":
-                    self.pipelineDetails["Class"]="3"
-                else:
-                    self.pipelineDetails["Class"]="4"
-            except:
-                pass
-            # Data Analysis 
-            self.safetyFactors()
-            
-
-        except:
-            missingValuesWindow()
-
 # (Screen 2) - screen2_Setup (load widgets for screen 2) 
     def screen2_Setup(self):
         self.frame_left_upper=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
@@ -562,6 +453,115 @@ class MainWindow:
         self.save_button=ttk.Button(self.frame_right,text="Save Data",command=self.save_pipelineDetail)
         self.save_button.grid(column=4,row=13)
 
+# (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
+    def save_pipelineDetail(self):
+        # Column 1
+        try:
+            self.pipelineDetails["Client"]= self.client_label_input.get()
+            self.pipelineDetails["License Number"]= self.license_label_input.get()
+            self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
+            try:
+                self.pipelineDetails["Nominal ID"]= float(self.nominalID_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["SMYS"]= float(self.SMYS_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Code Design Factor"]= float(self.designFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Location Factor"]= float(self.locationFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Joint Factor"]= float(self.jointFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Temperature Factor"]= float(self.temperatureFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["License Pressure"]= float(self.licensePressure_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Normal Operating Temperature"]= float(self.operatingTemperature_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Max Operating Pressure"]= float(self.maximumPressure_label_input.get())
+            except:
+                pass
+        # Column 2
+            self.pipelineDetails["Substance"]= self.substance_label_input.get()
+            self.pipelineDetails["To"]= self.to_label_input.get()
+            self.pipelineDetails["From"]= self.from_label_input.get()
+            try:
+                self.pipelineDetails["Length"]= float(self.length_label_input.get())
+            except:
+                pass
+            self.pipelineDetails["Material"]= self.material_label_input.get()
+            self.pipelineDetails["Material Type"]= self.materialType_label_input.get()
+            self.pipelineDetails["Grade"]= self.grade_label_input.get()
+            try:
+                self.pipelineDetails["Stress"]= float(self.stress_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["MOP"]= float(self.MOP_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["H2S"]= float(self.h2s_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Age"]= float(self.age_label_input.get())
+            except:
+                pass
+        # Column 3
+            self.pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
+            self.pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
+            self.pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
+            self.pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
+            self.pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
+            self.pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
+            self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
+            self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
+
+        #try and set class
+            try:
+                if self.pipelineDetails["Pipeline Class"]=="None":
+                    self.pipelineDetails["Class"]="1"
+                elif self.pipelineDetails["Pipeline Class"]=="10 or fewer dwelling units":
+                    self.pipelineDetails["Class"]="1"
+                elif self.pipelineDetails["Pipeline Class"]=="11 to 46 dwellings":
+                    self.pipelineDetails["Class"]="2"
+                elif self.pipelineDetails["Pipeline Class"]=="46 or more dwelling units":
+                    self.pipelineDetails["Class"]="3"
+                else:
+                    self.pipelineDetails["Class"]="4"
+            except:
+                pass
+            # Data Analysis 
+            self.safetyFactors()
+            
+
+        except:
+            missingValuesWindow()
+
 # gui_elements_remove - Delete widgets from screen (generic) 
     def gui_elements_remove(self,elements):
         for element in elements:
@@ -612,7 +612,7 @@ class MainWindow:
                    self.save_button
                    ]
         elif number == 3:
-            return [self.w3_Lower
+            return [self.rightFrame
                    ]            
 
 # safetyFactors - Check pipeline Safety Factors
@@ -728,15 +728,15 @@ class MainWindow:
 class missingValuesWindow:
     def __init__(self):
         self.errorWindow=Toplevel(root)
-        self.frame=Frame(self.errorWindow)
+        self.frame=Frame(self.errorWindow, width=100,height=50)
         self.frame.pack()
-        Label(self.frame,text="You did not input all necessary data on page 2",height=10,width=15,wraplength=50).pack()
+        Label(self.frame,text="You suck. Put in more info on page 2",height=10,width=15,wraplength=100).pack()
         
 def main():
     global root
 
     root=Tk()
-    root.geometry("1000x1300")
+    root.geometry("1500x1300")
     #root.resizable(width=FALSE,height=FALSE)
     window=MainWindow(root)
     

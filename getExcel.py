@@ -133,7 +133,9 @@ def dataAnalysis(pipelineDetails):
             
             
             newFeaturesList[i]['Ao']=newFeaturesList[i]['Length']*newFeaturesList[i]['Wall Thickness']
-            newFeaturesList[i]['A']=newFeaturesList[i]['Length']*newFeaturesList[i]['Depth']
+            newFeaturesList[i]['A']=0.893*(newFeaturesList[i]['Length']/math.sqrt(newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Wall Thickness'])) #B31G Original (Part 4)
+            #if newFeaturesList[i]['A'] < 4:
+                #pass
             newFeaturesList[i]['AoverAnot']=newFeaturesList[i]['A']/newFeaturesList[i]['Ao']
             newFeaturesList[i]['SF Level 2, Original']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Original"]))*newFeaturesList[i]['Sflow']
             newFeaturesList[i]['SF Level 2, Modified']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Modified"]))*newFeaturesList[i]['Sflow']
@@ -141,4 +143,16 @@ def dataAnalysis(pipelineDetails):
             newFeaturesList[i]['PF Level 2, Modified']=(2*newFeaturesList[i]['SF Level 2, Modified']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
             newFeaturesList[i]['PS Level 2, Original']=newFeaturesList[i]['PF Level 2, Original']/pipelineDetails['SafetyFactor']
             newFeaturesList[i]['PS Level 2, Modified']=newFeaturesList[i]['PF Level 2, Modified']/pipelineDetails['SafetyFactor']
+            
+            print("PF Values: ")
+            print(newFeaturesList[i]['PF Level 1(Original)'])
+            print(newFeaturesList[i]['PF Level 1(Modified)'])
+            print(newFeaturesList[i]['PF Level 2, Original'])
+            print(newFeaturesList[i]['PF Level 2, Modified'])
+            print("")
 
+            print("PS Values: ")
+            print(newFeaturesList[i]['PS Level 1(Original)'])
+            print(newFeaturesList[i]['PS Level 1(Modified)'])
+            print(newFeaturesList[i]['PS Level 2, Original'])
+            print(newFeaturesList[i]['PS Level 2, Modified'])

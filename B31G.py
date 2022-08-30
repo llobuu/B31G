@@ -360,7 +360,7 @@ class MainWindow:
             except:
                 pass
             try: 
-                self.operatingTemperature_label_input.insert(0,self.pipelineDetails['Normal Operating Pressure'])
+                self.operatingTemperature_label_input.insert(0,self.pipelineDetails['Normal Operating Temperature'])
             except:
                 pass
             try: 
@@ -557,8 +557,7 @@ class MainWindow:
                 pass
             # Data Analysis 
             self.safetyFactors()
-            
-
+            self.pipeline_Detail_Screen()
         except:
             missingValuesWindow()
 
@@ -723,7 +722,9 @@ class MainWindow:
         self.pipelineDetails["Code Design Factor"]=float(0.8)
         self.pipelineDetails['MaxDesignFactor']=self.pipelineDetails['Code Design Factor']*self.pipelineDetails['Location Factor']*self.pipelineDetails['Temperature Factor']
         self.pipelineDetails['SafetyFactor']=1/self.pipelineDetails['MaxDesignFactor']
-        
+        #Test factor for OnStream data
+        self.pipelineDetails['Safety Factor']=float(1.25)
+
 # Error Window if data missing from calculations in window 2
 class missingValuesWindow:
     def __init__(self):

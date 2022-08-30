@@ -101,7 +101,6 @@ def dataAnalysis(pipelineDetails):
             pass
         else:
             newFeaturesList[i]['Nominal OD']=pipelineDetails['Nominal ID']+(2*newFeaturesList[i]['Wall Thickness'])
-            print("--------------------")
             newFeaturesList[i]["Z Value"]=(newFeaturesList[i]['Length']**2)/(newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Wall Thickness'])
 
             # Calculate Original M Value (Original B31G)
@@ -127,29 +126,19 @@ def dataAnalysis(pipelineDetails):
             newFeaturesList[i]['SF Modified']=newFeaturesList[i]['Sflow']*((1-(0.85*dOVERt))/(1-((0.85*dOVERt)/newFeaturesList[i]['M Modified'])))
             newFeaturesList[i]['PF Level 1(Original)']=(2*newFeaturesList[i]['SF Original']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000
             newFeaturesList[i]['PF Level 1(Modified)']=(2*newFeaturesList[i]['SF Modified']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000    # Units of kPa
-            
             newFeaturesList[i]['PS Level 1(Original)']=newFeaturesList[i]['PF Level 1(Original)']/pipelineDetails['SafetyFactor']
             newFeaturesList[i]['PS Level 1(Modified)']=newFeaturesList[i]['PF Level 1(Modified)']/pipelineDetails['SafetyFactor']
-            # Error Checking
-            #print("Z Factor is: ", newFeaturesList[i]['Z Value'])
-            #print("Sflow is: ",newFeaturesList[i]['Sflow'])
-            #print("dOVERt is: ", dOVERt)
-            #print("M Original is: ",newFeaturesList[i]['M Original'])
-            #print("M Modified is: ",newFeaturesList[i]['M Modified'])
-            #print("SF Original is: ",newFeaturesList[i]['SF Original'])
-            #print("SF Modified is: ",newFeaturesList[i]['SF Modified'])
-            #print("PF Level 1 Original is: ",(newFeaturesList[i]['PF Level 1(Original)'],"kPa"))
-            #print("PF Level 1 Modified is: ",(newFeaturesList[i]['PF Level 1(Modified)'],"kPa"))
-            #print("SF (Original) is: ",newFeaturesList[i]['PS Level 1(Original)'])
-            #print("SF (Modified) is: ",newFeaturesList[i]['PS Level 1(Modified)'])
 
             # Level 2 Evaluation
-            newFeaturesList[i]['Ao']=(math.pi/4)*((newFeaturesList[i]['Nominal OD']**2)-(pipelineDeatails['Nominal ID']**2))
-            print("Ao is: ", newFeaturesList[i]['Ao'])
-            newFeaturesList[i]['A']=(math.pi/4)*(((newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Depth'])**2)-(pipelineDeatails['Nominal ID']**2))
-            print("A is: ", newFeaturesList[i]['A'])
-
-        
-
-
+            
+            
+            newFeaturesList[i]['Ao']=newFeaturesList[i]['Length']*newFeaturesList[i]['Wall Thickness']
+            newFeaturesList[i]['A']=newFeaturesList[i]['Length']*newFeaturesList[i]['Depth']
+            newFeaturesList[i]['AoverAnot']=newFeaturesList[i]['A']/newFeaturesList[i]['Ao']
+            newFeaturesList[i]['SF Level 2, Original']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Original"]))*newFeaturesList[i]['Sflow']
+            newFeaturesList[i]['SF Level 2, Modified']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Modified"]))*newFeaturesList[i]['Sflow']
+            newFeaturesList[i]['PF Level 2, Original']=(2*newFeaturesList[i]['SF Level 2, Original']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
+            newFeaturesList[i]['PF Level 2, Modified']=(2*newFeaturesList[i]['SF Level 2, Modified']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
+            newFeaturesList[i]['PS Level 2, Original']=newFeaturesList[i]['PF Level 2, Original']/pipelineDetails['SafetyFactor']
+            newFeaturesList[i]['PS Level 2, Modified']=newFeaturesList[i]['PF Level 2, Modified']/pipelineDetails['SafetyFactor']
 

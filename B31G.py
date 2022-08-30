@@ -5,7 +5,7 @@ import getExcel #Import File #2
 class MainWindow:
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
         self.screenChoice=0
-        self.main_upperFrame=Frame(master,borderwidth=1,background="#82C836",width=2200,height=1300)
+        self.main_upperFrame=Frame(master,borderwidth=1,background="light blue",width=2200,height=1300)
         self.main_upperFrame.grid(column=0,row=0,sticky=(E,W))
         self.main_upperFrame.grid_columnconfigure(0,pad=100)
         self.main_upperFrame.grid_columnconfigure(1,pad=100)# First number is the column - will imact both sides; second number is the spacing.
@@ -19,20 +19,18 @@ class MainWindow:
         self.uploadScreen.grid(column=0,row=0)  
 
         self.pipelineDetail_Screen=Button(self.main_upperFrame,text="Pipeline Details",command=self.pipeline_Detail_Screen,width=40,height=4)
-        self.pipelineDetail_Screen.grid(column=1,row=0)
+        self.pipelineDetail_Screen.grid(column=0,row=1)
 
         self.iliDisplay_Screen=Button(self.main_upperFrame,text="Data",command=self.iliData_Display,width=40,height=4)
-        self.iliDisplay_Screen.grid(column=2,row=0)
+        self.iliDisplay_Screen.grid(column=0,row=2)
         self.pipelineDetails={}
 
 # Screen #1 - Upload Screen
     def upload_Screen(self):
         # Clean up Screen
         if self.screenChoice == 2:
-            print("----------",self.screen_Elements(2),"----------")
             self.gui_elements_remove(self.screen_Elements(2))
         elif self.screenChoice ==3:
-            print("----------",self.screen_Elements(3),"----------")
             self.gui_elements_remove(self.screen_Elements(3))
 
         self.screenChoice = 1
@@ -122,111 +120,111 @@ class MainWindow:
 # (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
     def save_pipelineDetail(self):
         # Column 1
-
-        self.pipelineDetails["Client"]= self.client_label_input.get()
-        self.pipelineDetails["License Number"]= self.license_label_input.get()
-        self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
         try:
-            self.pipelineDetails["Nominal ID"]= float(self.nominalID_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["SMYS"]= float(self.SMYS_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Code Design Factor"]= float(self.designFactor_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Location Factor"]= float(self.locationFactor_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Joint Factor"]= float(self.jointFactor_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Temperature Factor"]= float(self.temperatureFactor_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["License Pressure"]= float(self.licensePressure_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Normal Operating Temperature"]= float(self.operatingTemperature_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Max Operating Pressure"]= float(self.maximumPressure_label_input.get())
-        except:
-            pass
+            self.pipelineDetails["Client"]= self.client_label_input.get()
+            self.pipelineDetails["License Number"]= self.license_label_input.get()
+            self.pipelineDetails["Inspection Date"]= self.inspectiondate_label_input.get()
+            try:
+                self.pipelineDetails["Nominal ID"]= float(self.nominalID_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Nominal Wall Thickness"]= float(self.nominalWT_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Corrosion Allowance"]= float(self.corrosionAllowance_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["SMYS"]= float(self.SMYS_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Code Design Factor"]= float(self.designFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Location Factor"]= float(self.locationFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Joint Factor"]= float(self.jointFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Temperature Factor"]= float(self.temperatureFactor_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["License Pressure"]= float(self.licensePressure_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Normal Operating Temperature"]= float(self.operatingTemperature_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Max Operating Pressure"]= float(self.maximumPressure_label_input.get())
+            except:
+                pass
         # Column 2
-        self.pipelineDetails["Substance"]= self.substance_label_input.get()
-        self.pipelineDetails["To"]= self.to_label_input.get()
-        self.pipelineDetails["From"]= self.from_label_input.get()
-        try:
-            self.pipelineDetails["Length"]= float(self.length_label_input.get())
-        except:
-            pass
-        self.pipelineDetails["Material"]= self.material_label_input.get()
-        self.pipelineDetails["Material Type"]= self.materialType_label_input.get()
-        self.pipelineDetails["Grade"]= self.grade_label_input.get()
-        try:
-            self.pipelineDetails["Stress"]= float(self.stress_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["MOP"]= float(self.MOP_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["H2S"]= float(self.h2s_label_input.get())
-        except:
-            pass
-        try:
-            self.pipelineDetails["Age"]= float(self.age_label_input.get())
-        except:
-            pass
+            self.pipelineDetails["Substance"]= self.substance_label_input.get()
+            self.pipelineDetails["To"]= self.to_label_input.get()
+            self.pipelineDetails["From"]= self.from_label_input.get()
+            try:
+                self.pipelineDetails["Length"]= float(self.length_label_input.get())
+            except:
+                pass
+            self.pipelineDetails["Material"]= self.material_label_input.get()
+            self.pipelineDetails["Material Type"]= self.materialType_label_input.get()
+            self.pipelineDetails["Grade"]= self.grade_label_input.get()
+            try:
+                self.pipelineDetails["Stress"]= float(self.stress_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["MOP"]= float(self.MOP_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["H2S"]= float(self.h2s_label_input.get())
+            except:
+                pass
+            try:
+                self.pipelineDetails["Age"]= float(self.age_label_input.get())
+            except:
+                pass
         # Column 3
-        self.pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
-        self.pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
-        self.pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
-        self.pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
-        self.pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
-        self.pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
-        self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
-        self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
+            self.pipelineDetails["Cased Crossing"]= self.casedCrossing_label_input.get()
+            self.pipelineDetails["Road Crossing"]= self.roadCrossing_label_input.get()
+            self.pipelineDetails["Railway Crossing"]= self.railwayCrossing_label_input.get()
+            self.pipelineDetails["Stations Crossing"]= self.stationCrossing_label_input.get()
+            self.pipelineDetails["Other Crossings"]= self.otherCrossing_label_input.get()
+            self.pipelineDetails["Substance Class"]= self.substanceClass_label_input.get()
+            self.pipelineDetails["Pipeline Class"]= self.pipelineClass_label_input.get()
+            self.pipelineDetails["Seam Type"]= self.seamType_label_input.get()
 
         #try and set class
-        try:
-            if self.pipelineDetails["Pipeline Class"]=="None":
-                self.pipelineDetails["Class"]="1"
-            elif self.pipelineDetails["Pipeline Class"]=="10 or fewer dwelling units":
-                self.pipelineDetails["Class"]="1"
-            elif self.pipelineDetails["Pipeline Class"]=="11 to 46 dwellings":
-                self.pipelineDetails["Class"]="2"
-            elif self.pipelineDetails["Pipeline Class"]=="46 or more dwelling units":
-                self.pipelineDetails["Class"]="3"
-            else:
-                self.pipelineDetails["Class"]="4"
-
-        except:
-            pass
-
-        try:
+            try:
+                if self.pipelineDetails["Pipeline Class"]=="None":
+                    self.pipelineDetails["Class"]="1"
+                elif self.pipelineDetails["Pipeline Class"]=="10 or fewer dwelling units":
+                    self.pipelineDetails["Class"]="1"
+                elif self.pipelineDetails["Pipeline Class"]=="11 to 46 dwellings":
+                    self.pipelineDetails["Class"]="2"
+                elif self.pipelineDetails["Pipeline Class"]=="46 or more dwelling units":
+                    self.pipelineDetails["Class"]="3"
+                else:
+                    self.pipelineDetails["Class"]="4"
+            except:
+                pass
+            # Data Analysis 
             self.safetyFactors()
+            
+
         except:
-            print("You are missing values on page 2")
+            missingValuesWindow()
 
 # (Screen 2) - screen2_Setup (load widgets for screen 2) 
     def screen2_Setup(self):
@@ -711,7 +709,7 @@ class MainWindow:
                 pass
         self.pipelineDetails['Location Factor']=locationNumber
         self.pipelineDetails['Joint Factor']=self.weldType[self.pipelineDetails["Seam Type"]]
-        print(self.pipelineDetails["Normal Operating Temperature"])
+        #print(self.pipelineDetails["Normal Operating Temperature"])
         if self.pipelineDetails["Normal Operating Temperature"] <= 120:
             self.pipelineDetails['Temperature Factor']=self.tempTable['120']
         elif self.pipelineDetails["Normal Operating Temperature"] <= 150:
@@ -726,16 +724,19 @@ class MainWindow:
         self.pipelineDetails['MaxDesignFactor']=self.pipelineDetails['Code Design Factor']*self.pipelineDetails['Location Factor']*self.pipelineDetails['Temperature Factor']
         self.pipelineDetails['SafetyFactor']=1/self.pipelineDetails['MaxDesignFactor']
         
-
-        print("Temp Factor: ",self.pipelineDetails["Temperature Factor"]) 
-        print("Max Design Factor: ", self.pipelineDetails['MaxDesignFactor'])
-        print("Safety Factor: ",self.pipelineDetails['SafetyFactor']) 
-
+# Error Window if data missing from calculations in window 2
+class missingValuesWindow:
+    def __init__(self):
+        self.errorWindow=Toplevel(root)
+        self.frame=Frame(self.errorWindow)
+        self.frame.pack()
+        Label(self.frame,text="You did not input all necessary data on page 2",height=10,width=15,wraplength=50).pack()
+        
 def main():
     global root
 
     root=Tk()
-    root.geometry("2000x1300")
+    root.geometry("1000x1300")
     #root.resizable(width=FALSE,height=FALSE)
     window=MainWindow(root)
     

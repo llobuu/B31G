@@ -25,6 +25,9 @@ class MainWindow:
         self.iliDisplay_Screen.grid(column=0,row=2)
         self.pipelineDetails={}
 
+        self.burst_Screen=Button(self.main_leftFrame,text="Burst Data",command=self.burstPressureDisplay,width=15,height=4)
+        self.burst_Screen.grid(column=0,row=3)
+
 # Screen #1 - Upload Screen
     def upload_Screen(self):
         # Clean up Screen
@@ -32,7 +35,8 @@ class MainWindow:
             self.gui_elements_remove(self.screen_Elements(2))
         elif self.screenChoice ==3:
             self.gui_elements_remove(self.screen_Elements(3))
-
+        elif self.screenChoice ==4:
+            self.gui_elements_remove(self.screen_Elements(4))
         self.screenChoice = 1
 
         self.frame1=Frame(self.main_frame,borderwidth=1,relief="solid",padx=2,pady=2)
@@ -60,6 +64,8 @@ class MainWindow:
             self.gui_elements_remove(self.screen_Elements(1))
         elif self.screenChoice ==3:
             self.gui_elements_remove(self.screen_Elements(3))
+        elif self.screenChoice ==4:
+            self.gui_elements_remove(self.screen_Elements(4))
         self.screenChoice = 2
         self.screen2_Setup()                  
 
@@ -69,6 +75,8 @@ class MainWindow:
             self.gui_elements_remove(self.screen_Elements(1))
         elif self.screenChoice ==2:
             self.gui_elements_remove(self.screen_Elements(2))
+        elif self.screenChoice ==4:
+            self.gui_elements_remove(self.screen_Elements(4))
 
         self.screenChoice = 3
 
@@ -106,6 +114,20 @@ class MainWindow:
 
         self.display_Dictionary()
  
+# Screen #4 - Burst Data
+    def burstPressureDisplay(self):
+        if self.screenChoice == 1:
+            self.gui_elements_remove(self.screen_Elements(1))
+        elif self.screenChoice ==2:
+            self.gui_elements_remove(self.screen_Elements(2))
+        elif self.screenChoice ==3:
+            self.gui_elements_remove(self.screen_Elements(3))
+
+        self.screenChoice = 4
+
+        self.rightFrame=Frame(self.main_frame,borderwidth=1,relief='solid',padx=1,pady=1,background='yellow')
+        self.rightFrame.place(width=1500,relheight=1)
+
 # (Screen #1 Button) pullfile() - Get File Path From User
     def pullfile(self):
         self.file=getExcel.importILIData()
@@ -612,7 +634,10 @@ class MainWindow:
                    ]
         elif number == 3:
             return [self.rightFrame
-                   ]            
+                   ]
+        elif number == 4:
+            return [self.rightFrame
+                   ]
 
 # safetyFactors - Check pipeline Safety Factors
     def safetyFactors(self):

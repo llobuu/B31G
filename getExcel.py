@@ -115,44 +115,37 @@ def dataAnalysis(pipelineDetails):
             # Calculate Sflow
             newFeaturesList[i]["Sflow"]=pipelineDetails["SMYS"]*1.1
 
-            # Level 1 Evaluation (Original)
+            # Method 1 - Original B31G (0.67dL), B31G Level 1
             dOVERt=newFeaturesList[i]['Depth']/newFeaturesList[i]['Wall Thickness']
-
             if newFeaturesList[i]["Z Value"] <= 20:
                 newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*((1-((2/3)*dOVERt))/(1-(((2/3)*dOVERt)/newFeaturesList[i]['M Original'])))
             else:
                 newFeaturesList[i]['SF Original']=newFeaturesList[i]['Sflow']*(1-dOVERt)
-            # Level 1 Evaluation (Modified)
-            newFeaturesList[i]['SF Modified']=newFeaturesList[i]['Sflow']*((1-(0.85*dOVERt))/(1-((0.85*dOVERt)/newFeaturesList[i]['M Modified'])))
             newFeaturesList[i]['PF Level 1(Original)']=(2*newFeaturesList[i]['SF Original']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000
-            newFeaturesList[i]['PF Level 1(Modified)']=(2*newFeaturesList[i]['SF Modified']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000    # Units of kPa
             newFeaturesList[i]['PS Level 1(Original)']=newFeaturesList[i]['PF Level 1(Original)']/pipelineDetails['SafetyFactor']
+                
+            # Method 2 - Modified B31G (0.85dL), B31G Level 1
+            newFeaturesList[i]['SF Modified']=newFeaturesList[i]['Sflow']*((1-(0.85*dOVERt))/(1-((0.85*dOVERt)/newFeaturesList[i]['M Modified'])))
+            newFeaturesList[i]['PF Level 1(Modified)']=(2*newFeaturesList[i]['SF Modified']*newFeaturesList[i]['Wall Thickness'])/newFeaturesList[i]['Nominal OD']*1000    # Units of kPa
             newFeaturesList[i]['PS Level 1(Modified)']=newFeaturesList[i]['PF Level 1(Modified)']/pipelineDetails['SafetyFactor']
 
-            # Level 2 Evaluation
-            
-            
+            # Method 3 Exact Trapezoid
+            # Need code
+
+            # Method 4 Equivalent Area
+            # Need code
+
+            # Method 5 RSTRENG Effective Area, B31G Level 2
+
             newFeaturesList[i]['Ao']=newFeaturesList[i]['Length']*newFeaturesList[i]['Wall Thickness']
             newFeaturesList[i]['A']=0.893*(newFeaturesList[i]['Length']/math.sqrt(newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Wall Thickness'])) #B31G Original (Part 4)
-            #if newFeaturesList[i]['A'] < 4:
-                #pass
             newFeaturesList[i]['AoverAnot']=newFeaturesList[i]['A']/newFeaturesList[i]['Ao']
-            newFeaturesList[i]['SF Level 2, Original']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Original"]))*newFeaturesList[i]['Sflow']
+
+            #newFeaturesList[i]['SF Level 2, Original']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Original"]))*newFeaturesList[i]['Sflow']
+            #newFeaturesList[i]['PF Level 2, Original']=(2*newFeaturesList[i]['SF Level 2, Original']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
+            #newFeaturesList[i]['PS Level 2, Original']=newFeaturesList[i]['PF Level 2, Original']/pipelineDetails['SafetyFactor']
             newFeaturesList[i]['SF Level 2, Modified']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Modified"]))*newFeaturesList[i]['Sflow']
-            newFeaturesList[i]['PF Level 2, Original']=(2*newFeaturesList[i]['SF Level 2, Original']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
             newFeaturesList[i]['PF Level 2, Modified']=(2*newFeaturesList[i]['SF Level 2, Modified']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
-            newFeaturesList[i]['PS Level 2, Original']=newFeaturesList[i]['PF Level 2, Original']/pipelineDetails['SafetyFactor']
             newFeaturesList[i]['PS Level 2, Modified']=newFeaturesList[i]['PF Level 2, Modified']/pipelineDetails['SafetyFactor']
             
-            print("PF Values: ")
-            print(newFeaturesList[i]['PF Level 1(Original)'])
-            print(newFeaturesList[i]['PF Level 1(Modified)'])
-            print(newFeaturesList[i]['PF Level 2, Original'])
-            print(newFeaturesList[i]['PF Level 2, Modified'])
-            print("")
 
-            print("PS Values: ")
-            print(newFeaturesList[i]['PS Level 1(Original)'])
-            print(newFeaturesList[i]['PS Level 1(Modified)'])
-            print(newFeaturesList[i]['PS Level 2, Original'])
-            print(newFeaturesList[i]['PS Level 2, Modified'])

@@ -128,6 +128,21 @@ class MainWindow:
         self.rightFrame=Frame(self.main_frame,borderwidth=1,relief='solid',padx=1,pady=1,background='yellow')
         self.rightFrame.place(width=1500,relheight=1)
 
+        self.evaluationMethod=ttk.Combobox(self.rightFrame,value=["Method 1: 0.67dL","Method 2: 0.85dL","Method 3: Exact Trapezoid","Method 4: Equivalent Area","Method 5: RSTRENG Effective Area"],state="readonly")
+        self.evaluationMethod.grid(row=0, column=0)
+
+        
+        self.featureiD=ttk.Combobox(self.rightFrame,value=self.featureList())
+        self.featureiD.grid(row=1,column=0)
+        print(self.featureList)
+
+        self.displayValuesButton=ttk.Button(self.rightFrame,text="View Results",command=self.showValues)
+        self.displayValuesButton.grid(row=3,column=1)
+
+
+
+
+
 # (Screen #1 Button) pullfile() - Get File Path From User
     def pullfile(self):
         self.file=getExcel.importILIData()
@@ -582,6 +597,22 @@ class MainWindow:
             self.pipeline_Detail_Screen()
         except:
             missingValuesWindow()
+
+# (Screen #4 Button) load values on table
+    def showValues(self):
+        self.resultsLabel=Label(self.rightFrame,text="Results")
+        self.resultsLabel.grid(row=4,column=0)
+        
+
+
+
+# featureList - Makes a list for Screen 4 drop down of features.
+    def featureList(self):
+        listdict=[]
+        for i in getExcel.newFeaturesList:
+            listdict.append(i)
+            print(listdict)
+        return listdict
 
 # gui_elements_remove - Delete widgets from screen (generic) 
     def gui_elements_remove(self,elements):

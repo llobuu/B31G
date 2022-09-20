@@ -6,12 +6,12 @@ class MainWindow:
     def __init__(self, master):     #you can use something other than 'master' if you'd like.
         self.screenChoice=0
         self.main_leftFrame=Frame(master,borderwidth=1,background="light blue",width=20)
-        self.main_leftFrame.grid(column=0,row=0,sticky=(E,W))
+        self.main_leftFrame.grid(column=0,row=0,sticky=(E,W,N,S),rowspan=1)
         self.main_leftFrame.grid_columnconfigure(0,pad=20)
         self.main_leftFrame.grid_columnconfigure(1,pad=20)# First number is the column - will imact both sides; second number is the spacing.
-       # self.main_upperFrame.propagate(False)
+        #self.main_upperFrame.propagate(False)
 
-        self.main_frame=Frame(master, background='green',width=1500,height=100)
+        self.main_frame=Frame(master, background='green',width=2000,height=200)
         self.main_frame.grid(row=0,column=1,sticky=(N,S,E,W))
         self.main_frame.propagate(False)
 
@@ -67,7 +67,9 @@ class MainWindow:
         elif self.screenChoice ==4:
             self.gui_elements_remove(self.screen_Elements(4))
         self.screenChoice = 2
-        self.screen2_Setup()                  
+
+        self.screen2_Setup()   
+        
 
 # Screen #3 - ILI Data Display
     def iliData_Display(self):
@@ -81,10 +83,10 @@ class MainWindow:
         self.screenChoice = 3
 
         self.rightFrame=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
-        self.rightFrame.place(width=1500,relheight=1)
+        self.rightFrame.place(relwidth=1,relheight=1)
 
         self.tv1=ttk.Treeview(self.rightFrame,columns=('feature','jointID','featureType','groupID','distance','girthUS','girthDS','jointLength','length','width','depth','depthPercent','orientation','intExt','latitude','longitude','comment'),show='headings')
-        self.tv1.place(relheight=1,relwidth=1,)
+        self.tv1.place(relheight=1,relwidth=1)
         self.tv1.column("#1",anchor=CENTER,width=70,stretch=False)
         self.tv1.column("#2",anchor=CENTER,width=70,stretch=False)
         self.tv1.column("#3",anchor=CENTER,width=70,stretch=False)
@@ -126,22 +128,75 @@ class MainWindow:
         self.screenChoice = 4
 
         self.rightFrame=Frame(self.main_frame,borderwidth=1,relief='solid',padx=1,pady=1,background='yellow')
-        self.rightFrame.place(width=1500,relheight=1)
+        self.rightFrame.place(relwidth=1,relheight=1)
 
         self.evaluationMethod=ttk.Combobox(self.rightFrame,value=["Method 1: 0.67dL","Method 2: 0.85dL","Method 3: Exact Trapezoid","Method 4: Equivalent Area","Method 5: RSTRENG Effective Area"],state="readonly")
         self.evaluationMethod.grid(row=0, column=0)
 
-        
         self.featureiD=ttk.Combobox(self.rightFrame,value=self.featureList())
         self.featureiD.grid(row=1,column=0)
-        print(self.featureList)
 
         self.displayValuesButton=ttk.Button(self.rightFrame,text="View Results",command=self.showValues)
-        self.displayValuesButton.grid(row=3,column=1)
+        self.displayValuesButton.grid(row=3,column=0)
 
 
+        Label(self.rightFrame,text="Level 1",background="red",font="Arial 14 bold", justify='center').grid(column=1,row=4,sticky="n,s,e,w")
+        Label(self.rightFrame,text="Level 2",background="green",font="Arial 14 bold", justify='center').grid(column=2,row=4,sticky="n,s,e,w")
+        Label(self.rightFrame,text="Level 3",background="red",font="Arial 14 bold", justify='center').grid(column=3,row=4,sticky="n,s,e,w")
+        Label(self.rightFrame,text="Level 4",background="green",font="Arial 14 bold", justify='center').grid(column=4,row=4,sticky="n,s,e,w")
+        Label(self.rightFrame,text="Level 5",background="red",font="Arial 14 bold", justify='center').grid(column=5,row=4,sticky="n,s,e,w")
+        
+        Label(self.rightFrame,text="M Value:",background="blue",font="Arial 14 bold", justify='center').grid(column=0,row=5,sticky="n,s,e,w")
+        Label(self.rightFrame,text="PF Value:",background="green",font="Arial 14 bold", justify='center').grid(column=0,row=6,sticky="n,s,e,w")
+        Label(self.rightFrame,text="SF Value:",background="blue",font="Arial 14 bold", justify='center').grid(column=0,row=7,sticky="n,s,e,w")
 
+        self.mValue_1=StringVar()
+        self.mValue_1=ttk.Entry(self.rightFrame,textvariable=self.mValue_1)
+        self.mValue_1.grid(column=1,row=5,sticky="n,s,e,w")
+        self.mValue_2_input=StringVar()
+        self.mValue_2=ttk.Entry(self.rightFrame,textvariable=self.mValue_2_input)
+        self.mValue_2.grid(column=2,row=5,sticky="n,s,e,w")
+        self.mValue_3_input=StringVar()
+        self.mValue_3=ttk.Entry(self.rightFrame,textvariable=self.mValue_3_input)
+        self.mValue_3.grid(column=3,row=5,sticky="n,s,e,w")
+        self.mValue_4=StringVar()
+        self.mValue_4=Entry(self.rightFrame,textvariable=self.mValue_4)
+        self.mValue_4.grid(column=4,row=5,sticky="n,s,e,w")
+        self.mValue_5=StringVar()
+        self.mValue_5=Entry(self.rightFrame,textvariable=self.mValue_5)
+        self.mValue_5.grid(column=5,row=5,sticky="n,s,e,w")
 
+        self.PF_Value1=StringVar()
+        self.PF_Value1=Entry(self.rightFrame,textvariable=self.PF_Value1)
+        self.PF_Value1.grid(column=1,row=6,sticky="n,s,e,w")
+        self.PF_Value2=StringVar()
+        self.PF_Value2=Entry(self.rightFrame,textvariable=self.PF_Value2)
+        self.PF_Value2.grid(column=2,row=6,sticky="n,s,e,w")
+        self.PF_Value3=StringVar()
+        self.PF_Value3=Entry(self.rightFrame,textvariable=self.PF_Value3)
+        self.PF_Value3.grid(column=3,row=6,sticky="n,s,e,w")
+        self.PF_Value4=StringVar()
+        self.PF_Value4=Entry(self.rightFrame,textvariable=self.PF_Value4)
+        self.PF_Value4.grid(column=4,row=6,sticky="n,s,e,w")
+        self.PF_Value5=StringVar()
+        self.PF_Value5=Entry(self.rightFrame,textvariable=self.PF_Value5)
+        self.PF_Value5.grid(column=5,row=6,sticky="n,s,e,w")
+
+        self.SF_Value1=StringVar()
+        self.SF_Value1=Entry(self.rightFrame,textvariable=self.SF_Value1)
+        self.SF_Value1.grid(column=1,row=7,sticky="n,s,e,w")
+        self.SF_Value2=StringVar()
+        self.SF_Value2=Entry(self.rightFrame,textvariable=self.SF_Value2)
+        self.SF_Value2.grid(column=2,row=7,sticky="n,s,e,w")
+        self.SF_Value3=StringVar()
+        self.SF_Value3=Entry(self.rightFrame,textvariable=self.SF_Value3)
+        self.SF_Value3.grid(column=3,row=7,sticky="n,s,e,w")
+        self.SF_Value4=StringVar()
+        self.SF_Value4=Entry(self.rightFrame,textvariable=self.SF_Value4)
+        self.SF_Value4.grid(column=4,row=7,sticky="n,s,e,w")
+        self.SF_Value5=StringVar()
+        self.SF_Value5=Entry(self.rightFrame,textvariable=self.SF_Value5)
+        self.SF_Value5.grid(column=5,row=7,sticky="n,s,e,w")
 
 # (Screen #1 Button) pullfile() - Get File Path From User
     def pullfile(self):
@@ -163,7 +218,7 @@ class MainWindow:
         self.frame_middle=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
         self.frame_middle.grid(column=2,row=1)
         self.frame_right=Frame(self.main_frame,borderwidth=1,relief="solid",padx=1,pady=1,background="white")
-        self.frame_right.grid(column=3,row=1,sticky="n")
+        self.frame_right.grid(column=3,row=1,sticky="n,s")
 
         # Column 1 Pipeline Static Design Details (Labels)
         
@@ -344,7 +399,7 @@ class MainWindow:
         self.seamType_label_input.grid(column=6,row=12)
         
 
-        #Fill in if not blank:
+        #Fill in template with pre-existing data if not blank:
         if bool(self.pipelineDetails):
             
             #Re-Add column 1 Data
@@ -488,10 +543,11 @@ class MainWindow:
 
         # Submit Button at the bottom
         self.save_button=ttk.Button(self.frame_right,text="Save Data",command=self.save_pipelineDetail)
-        self.save_button.grid(column=4,row=13)
+        self.save_button.grid(column=5,row=13)
 
 # (Screen #2 Button) save_pipelineDetail - Send ILI data to screen 3
     def save_pipelineDetail(self):
+        #Saves data. If no data input, it will pass to next cell.
         # Column 1
         try:
             self.pipelineDetails["Client"]= self.client_label_input.get()
@@ -600,24 +656,85 @@ class MainWindow:
 
 # (Screen #4 Button) load values on table
     def showValues(self):
-        self.resultsLabel=Label(self.rightFrame,text="Results")
-        self.resultsLabel.grid(row=4,column=0)
-        
+
+        try: 
+            self.mValue_1.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['M Original'])
+        except:
+            pass
+        try: 
+            self.mValue_2.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['M Modified'])
+        except:
+            pass       
+        try: 
+            self.mValue_3.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['M Modified'])
+        except:
+            pass
+        try: 
+            self.mValue_4.insert(0,"Future Calculation")
+        except:
+            pass
+        try: 
+            self.mValue_5.insert(0,"Future Calculation")
+        except:
+            pass
 
 
+        try: 
+            self.PF_Value1.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['PF Level 1(Original)'])
+        except:
+            pass
+        try: 
+            self.PF_Value2.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['PF Level 1(Modified)'])
+        except:
+            pass
+        try: 
+            self.PF_Value3.insert(0,"Future Calculation")
+        except:
+            pass
+        try: 
+            self.PF_Value4.insert(0,"Future Calculation")
+        except:
+            pass
+        try: 
+            self.PF_Value5.insert(0,"Future Calculation")
+        except:
+            pass
+
+
+
+        try: 
+            self.SF_Value1.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['SF Original'])
+        except:
+            pass
+        try: 
+            self.SF_Value2.insert(0,getExcel.newFeaturesList[self.featureiD.get()]['SF Modified'])
+        except:
+            pass
+        try: 
+            self.SF_Value3.insert(0,"Future Calculation")
+        except:
+            pass
+        try: 
+            self.SF_Value4.insert(0,"Future Calculation")
+        except:
+            pass
+        try: 
+            self.SF_Value5.insert(0,"Future Calculation")
+        except:
+            pass
 
 # featureList - Makes a list for Screen 4 drop down of features.
     def featureList(self):
         listdict=[]
         for i in getExcel.newFeaturesList:
             listdict.append(i)
-            print(listdict)
         return listdict
 
 # gui_elements_remove - Delete widgets from screen (generic) 
     def gui_elements_remove(self,elements):
         for element in elements:
             element.destroy()
+        #self.main_frame=Frame(width=2000,height=200)
        
 # display_Dictionary - Display ILI data and results to user (generic)
     def display_Dictionary(self):        
@@ -642,7 +759,13 @@ class MainWindow:
 
         for i in getExcel.newFeaturesList: # Sort through Features (i = feature ID)
             list=[]
+            if getExcel.newFeaturesList[i] != getExcel.newFeaturesList[i]:
+                list.append("")
+            else:
+                list.append(i)
+
             for j in getExcel.newFeaturesList[i]: # Sort through feature specifics (J = specific information in row)
+                #print(j)
                 if getExcel.newFeaturesList[i][j] != getExcel.newFeaturesList[i][j]:
                     #print("NaN") #Test case
                     list.append("")

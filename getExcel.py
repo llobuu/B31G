@@ -53,7 +53,7 @@ def Encompass(file):
 
     #variable for only the feature id's.
     originalFeature=Testfile['Feature\nID']
-    originalJoint=Testfile['Joint\nID']
+    originalJoint=Testfile['Joint\nID'] 
     originalFeatureType=Testfile['Feature\nType']
     originalGroup=Testfile['Group\nID']
     originalDistance=Testfile['Distance']
@@ -95,6 +95,7 @@ def Encompass(file):
         newFeaturesList[originalFeature[i]]['Comments']=originalComments[i]
     #print(newFeaturesList.keys())
 
+# DataAnalysis
 def dataAnalysis(pipelineDetails):
     for i in newFeaturesList:
         if newFeaturesList[i]['Depth'] != newFeaturesList[i]['Depth']: #Check if NaN
@@ -141,9 +142,7 @@ def dataAnalysis(pipelineDetails):
             newFeaturesList[i]['A']=0.893*(newFeaturesList[i]['Length']/math.sqrt(newFeaturesList[i]['Nominal OD']*newFeaturesList[i]['Wall Thickness'])) #B31G Original (Part 4)
             newFeaturesList[i]['AoverAnot']=newFeaturesList[i]['A']/newFeaturesList[i]['Ao']
 
-            #newFeaturesList[i]['SF Level 2, Original']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Original"]))*newFeaturesList[i]['Sflow']
-            #newFeaturesList[i]['PF Level 2, Original']=(2*newFeaturesList[i]['SF Level 2, Original']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
-            #newFeaturesList[i]['PS Level 2, Original']=newFeaturesList[i]['PF Level 2, Original']/pipelineDetails['SafetyFactor']
+
             newFeaturesList[i]['SF Level 2, Modified']=(1-newFeaturesList[i]['AoverAnot'])/(1-(newFeaturesList[i]['AoverAnot']/newFeaturesList[i]["M Modified"]))*newFeaturesList[i]['Sflow']
             newFeaturesList[i]['PF Level 2, Modified']=(2*newFeaturesList[i]['SF Level 2, Modified']*newFeaturesList[i]['Wall Thickness']*1000)/newFeaturesList[i]['Nominal OD']
             newFeaturesList[i]['PS Level 2, Modified']=newFeaturesList[i]['PF Level 2, Modified']/pipelineDetails['SafetyFactor']
